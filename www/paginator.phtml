@@ -1,0 +1,9 @@
+<div class="paginator">
+<?php for ($i = 1; $i < $this->pages; $i++): ?>
+	<?php if ($i == $this->currentPage): ?>
+		<strong><?php echo $i; ?></strong>
+	<?php else: ?>
+		<a href="/index.php/page/<?php echo $i; ?>"><?php echo $i; ?></a>
+	<?php endif; ?>
+<?php endfor; ?>
+</div>
