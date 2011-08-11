@@ -40,25 +40,40 @@
 			$this->assertTrue(is_array($appRootRoute));
 			$this->assertTrue(array_key_exists('match', $appRootRoute));
 
-			// must never be null
+			/*
+			 * // must never be null
 			$baseApplication = $r->getBaseApplication();
 
 			$this->assertNotNull($baseApplication);
 			$this->assertIsA($baseApplication, 'Application');
+			* 
+			*/
 
 			//  might be null
 			$appControllers = $app->getControllers();
+			
+			$this->assertTrue(is_array($appControllers));
 
 			// application's or core
-			$controller = $app->getDefaultController();
+			$controller = $app->getRootController();
+			
+			$this->assertTrue(is_object($controller));
 
 			// might be null if application's one
-			$controllerActions = $controller->getActions();
+			$controllerActions = get_class_methods($controller);
+			
+			$this->assertTrue(is_array($controllerActions));
+			$this->assertTrue(count($controllerActions) > 0);
 
 			// self or parent
-			$action = $controller->getDefaultAction();
+			$action = $app->getDefaultAction();
+			
+			$this->assertTrue(is_string($action));
+			$this->assertTrue(method_exists($controller, $action));
 
 			// might not be null
-			$url = $r->getUrl($controller->getName(), $action->getName());
+			$url = $r->getUrl(get_class($controller), $action);
+			
+			$this->assertTrue(is_string($url));
 		}
 	}

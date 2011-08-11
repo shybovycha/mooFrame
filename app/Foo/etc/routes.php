@@ -3,7 +3,9 @@
 		'root' => array(
 			'match' => '/:arg',
 			'arg' => '[a-z]{1,}',
-			'rewrite' => true
+			'rewrite' => true,
+			'controller' => 'index',
+			'action' => 'index',
 		),
 	);
 

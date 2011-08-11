@@ -66,12 +66,10 @@ class Router
 				$path = '../app/' . $app . '/';
 
 				$instance = new Application($app);
-
+				
 				if (is_dir($path . '/etc/') && file_exists($path . '/etc/routes.php'))
 				{
 					include($path . '/etc/routes.php');
-
-					//var_dump($routes);
 
 					if (isset($routes))
 						$instance->setRoutes($routes);
@@ -143,5 +141,19 @@ class Router
 	public function getFileParams()
 	{
 		return $this->getArrayValues($_FILES, func_get_args());
+	}
+	
+	public function getUrl($controller, $action = NULL)
+	{
+		if (!isset($controller) || method_exists($controller, $action))
+		{
+			return NULL;
+		}
+		
+		if (!isset($action))
+		{
+		}
+		
+		return NULL;
 	}
 }
