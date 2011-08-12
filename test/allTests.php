@@ -72,8 +72,16 @@
 			$this->assertTrue(method_exists($controller, $action));
 
 			// might not be null
-			$url = $r->getUrl(get_class($controller), $action);
+			$url = $r->getUrl($appName, get_class($controller), $action);
+			
+			var_dump($appName, get_class($controller), $action);
 			
 			$this->assertTrue(is_string($url));
+			
+			var_dump($r->route('/Foo/index/index'));
+		}
+		
+		public function testController()
+		{
 		}
 	}

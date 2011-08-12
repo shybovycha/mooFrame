@@ -15,24 +15,63 @@ class Application
 	
 	function getControllers()
 	{
-		$path = '../app/' . $this->__data['name'] . '/controller/';
-		
-		$controllers = scandir($path);
-		$regex = '/^(\w+Controller)\.(\w+)$/';
-		
-		// Remove '.', '..' and non-controller-file entries
-		foreach ($controllers as $k => $v)
+		if (!isset($this->__data['controllers']))
 		{
-			if (!file_exists($path . $v) || !preg_match($regex, $v))
+			$path = '../app/' . $this->__data['name'] . '/controller/';
+			
+			$controllers = scandir($path);
+			$regex = '/^(\w+Controller)\.(\w+)$/';
+			
+			// Remove '.', '..' and non-controller-file entries
+			foreach ($controllers as $k => $v)
 			{
-				unset($controllers[$k]);
-			} else
-			{
-				$controllers[$k] = preg_replace($regex, '$1', $v);
+				if (!file_exists($path . $v) || !preg_match($regex, $v))
+				{
+					unset($controllers[$k]);
+				} else
+				{
+					$controllers[$k] = preg_replace($regex, '$1', $v);
+				}
 			}
+			
+			$this->__data['controllers'] = $controllers;
 		}
 		
-		return $controllers;
+		return $this->__data['controllers'];
+	}
+	
+	function getController($controller)
+	{
+		if (!isset($controller))
+		{
+			return NULL;
+		}
+		
+		$controllerList = $this->getControllers();
+		
+		if (!isset($controllerList[$controller]))
+		{
+			return NULL;
+		}
+		
+		require_once('../app/controller/' . $controllerList[$controller] . '.php');
+		return new $controllerList[$controller];
+	}
+	
+	function dispatch($routingParams)
+	{
+		if (isset($routingParams['controller']))
+		{
+			$controller = $this->getController($routingParams['controller']);
+			
+			if (!isset($controller) || (isset($routingParams['action']) && !method_exists($controller, $routingParams['action'])))
+				return FALSE;
+				
+			if (!isset($routingParams['params']))
+				$routingParams['params'] = array();
+				
+			call_user_method_array($routingParams['action'], $controller, $routingParams['params']);
+		}
 	}
 
 	function __call($func, $args)
@@ -73,13 +112,13 @@ class Application
 		return $this;
 	}
 
-	public function getRootRoute()
+	function getRootRoute()
 	{
 		if (isset($this->__data['routes']) && is_array($this->__data['routes']) && array_key_exists('root', $this->__data['routes']) && isset($this->__data['routes']['root']))
 			return $this->__data['routes']['root'];
 	}
 	
-	public function getRootController()
+	function getRootController()
 	{
 		if (isset($this->__data['routes']) && isset($this->__data['routes']['root']) && isset($this->__data['routes']['root']['controller']))
 		{
@@ -96,7 +135,7 @@ class Application
 		return NULL;
 	}
 	
-	public function getDefaultAction()
+	function getDefaultAction()
 	{
 		if (isset($this->__data['routes']) && isset($this->__data['routes']['root']) && isset($this->__data['routes']['root']['action']))
 		{
@@ -104,6 +143,68 @@ class Application
 		}
 		
 		return NULL;
+	}
+	
+	function matchUrl($url)
+	{
+		if (!isset($url))
+			return NULL;
+			
+		$res = array();
+			
+		foreach ($this->__data['routes'] as $rn => $r)
+		{
+			if (isset($r['match']))
+			{
+				if (isset($r['args']))
+				{
+					foreach ($r['args'] as $k => $v)
+					{
+						str_replace(":{$k}", $v);
+					}
+				}
+				
+				if (preg_match($r['match'], $url))
+					$res[] = $r;
+			}
+		}
+		
+		return $res;
+	}
+	
+	function matchRoutingParams($routingParams)
+	{
+		if (isset($routingParams['application']) && $this->__data['name'] == $routingParams['name'])
+		{
+			if (!isset($routingParams['controller']) && !isset($routingParams['action']))
+			{
+				return TRUE;
+			} else
+			if (!isset($routingParams['controller']) && isset($routingParams['action']))
+			{
+				$controllers = $this->getControllers();
+				
+				foreach ($controllers as $c)
+				{
+					if (isset($routingParams['controller']) && $c != $routingParams['controller'])
+					{
+						continue;
+					}
+					
+					$actions = get_class_methods($c);
+					
+					if (isset($actions[$routingParams['action']]))
+					{
+						return TRUE;
+					}
+				}
+			} else
+			{
+				return TRUE;
+			}
+		}
+		
+		return FALSE;
 	}
 }
 

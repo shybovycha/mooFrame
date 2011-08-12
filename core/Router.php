@@ -32,7 +32,7 @@ class Router
 		{
 			if (!$this->isApplicationListLoaded())
 			{
-				$this->loadApplicationList();
+				$this->getApplicationList();
 			}
 
 			foreach ($this->__applicationList as $v)
@@ -50,8 +50,6 @@ class Router
 
 	public function loadApplicationList()
 	{
-		//$_SERVER['REQUEST_URI'];
-
 		$appList = scandir('../app/');
 
 		$this->__applicationList = array();
@@ -89,12 +87,56 @@ class Router
 				unset($instance);
 			}
 		}
-
-		#var_dump(array('applications avaliable' => $applications, 'routes avaliable' => $routeConfig, 'default applications' => $defaultConfig));
 	}
 
-	public function route()
+	public function route($url = NULL)
 	{
+		if (!isset($url))
+		{
+			$url = $_SERVER['REQUEST_URI'];
+		}
+		
+		$url = str_replace($_SERVER['SCRIPT_NAME'], '', $url);
+		
+		$pieces = preg_split('/\//', $url);
+		$routingParams = array();
+		
+		// URL pattern: application/controller/action/arg0/arg1/...
+		
+		// application name
+		if (isset($pieces[1]))
+		{
+			$routingParams['application'] = $pieces[1];
+		}
+		
+		// controller name
+		if (isset($pieces[2]))
+		{
+			$routingParams['controller'] = $pieces[2];
+		}
+		
+		// action name
+		if (isset($pieces[3]))
+		{
+			$routingParams['action'] = $pieces[3];
+		}
+		
+		if (count($pieces) > 4)
+		{
+			$routingParams['params'] = array_splice($pieces, 4, count($pieces) - 4);
+		}
+		
+		$appList = $this->getApplicationList();
+		$routeMatchingApps = array();
+		
+		foreach ($appList as $app)
+		{
+			if ($app->matchUrl($url) || $app->matchRoutingParams($routingParams))
+			{
+				$routeMatchingApps[] = $app;
+				$app->dispatch($routingParams);
+			}
+		}
 	}
 
 	protected function getArrayValues($arr)
@@ -143,17 +185,53 @@ class Router
 		return $this->getArrayValues($_FILES, func_get_args());
 	}
 	
-	public function getUrl($controller, $action = NULL)
+	public function getUrl($applicationName, $controllerName, $actionName = NULL)
 	{
-		if (!isset($controller) || method_exists($controller, $action))
+		$appList = $this->getApplicationList();
+		
+		if (!isset($applicationName) || !isset($appList[$applicationName]))
 		{
 			return NULL;
 		}
 		
-		if (!isset($action))
+		$application = $appList[$applicationName];
+		
+		$controllerList = $application->getControllers();
+		
+		if (!isset($controllerName))
 		{
+			$defaultAction = $application->getDefaultAction();
+			$rootController = $application->getRootController();
+			
+			if (!isset($defaultAction))
+			{
+				if (!isset($rootController))
+				{
+					return NULL;
+				}
+
+				return $rootController;
+			}
+			
+			return $defaultAction;
 		}
 		
-		return NULL;
+		$controller = $application->getController($controllerName);
+		
+		$actionList = get_class_methods($controller);
+		
+		var_dump($controllerName, $actionList, $actionName);
+		
+		if (isset($actionName) && !isset($actionList[$actionName]))
+		{
+			return NULL;
+		}
+		
+		if (!isset($actionName))
+		{
+			return "{$applicationName}/{$controllerName}/{$actionName}";
+		}
+		
+		return "{$applicationName}/{$controllerName}/";
 	}
 }
