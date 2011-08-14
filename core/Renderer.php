@@ -1,41 +1,63 @@
 <?php
-//	require_once('../core/Application.php');
+		class __renderer__
+		{
+			private $__data = array();
+
+			public function __set($key, $value)
+			{
+				$this->__data[$key] = $value;
+			}
+
+			public function __get($key)
+			{
+				return (isset($this->__data[$key]) ? $this->__data[$key] : NULL);
+			}
+
+			public function partial($file, $args = NULL)
+			{
+				$renderer = new self();
+				return $renderer->render($file, $args);
+			}
+
+			public function render($file, $args = NULL)
+			{
+				if (!file_exists($file))
+					return NULL;
+
+				if (isset($args) && is_array($args))
+					$this->__data = $args;
+
+				ob_start();
+				include($file);
+				$res = ob_get_contents();
+				ob_end_clean();
+
+				return $res;
+			}
+		}
 
 	class Renderer
 	{
-		private $__data = array();
+		private static $__renderer;
 
-		public function __set($key, $value)
+		private static function getRenderer()
 		{
-			$this->__data[$key] = $value;
+			if (!isset(self::$__renderer))
+				self::$__renderer = new __renderer__();
+
+			return self::$__renderer;
 		}
 
-		public function __get($key)
+		public static function render($file, $args = NULL)
 		{
-			return (isset($this->__data[$key]) ? $this->__data[$key] : NULL);
+			$r = self::getRenderer();
+			echo $r->render($file, $args);
 		}
 
-		public function partial($file, $args = NULL)
+		public static function partial($file, $args = NULL)
 		{
-			//$class = get_class($this);
-			$renderer = new self(); //$class();
-			return $renderer->render($file, $args);
-		}
-
-		public function render($file, $args = NULL)
-		{
-			if (!file_exists($file))
-				return NULL;
-
-			if (isset($args) && is_array($args))
-				$this->__data = $args;
-
-			ob_start();
-			include($file);
-			$res = ob_get_contents();
-			ob_end_clean();
-
-			return $res;
+			$r = self::getRenderer();
+			echo $r->partial($file, $args);
 		}
 	}
 

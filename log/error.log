@@ -91,3 +91,149 @@
 [Thu Aug 11 20:53:30 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico, referer: http://localhost/index.php/page/6
 [Thu Aug 11 20:53:30 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
 [Thu Aug 11 20:53:30 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 11:23:51 2011] [error] [client 127.0.0.1] PHP Warning:  str_replace() expects at least 3 parameters, 2 given in /home/errorist/projects/php/mooframe/core/Application.php on line 163
+[Sun Aug 14 11:23:51 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: No ending delimiter '/' found in /home/errorist/projects/php/mooframe/core/Application.php on line 167
+[Sun Aug 14 11:23:51 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 177
+[Sun Aug 14 11:23:51 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: No ending delimiter '/' found in /home/errorist/projects/php/mooframe/core/Application.php on line 167
+[Sun Aug 14 11:23:51 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier ':' in /home/errorist/projects/php/mooframe/core/Application.php on line 167
+[Sun Aug 14 11:23:51 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 177
+[Sun Aug 14 11:23:51 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 177
+[Sun Aug 14 11:23:53 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:04:27 2011] [error] [client 127.0.0.1] PHP Warning:  str_replace() expects at least 3 parameters, 2 given in /home/errorist/projects/php/mooframe/core/Application.php on line 163
+[Sun Aug 14 12:04:27 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: No ending delimiter '/' found in /home/errorist/projects/php/mooframe/core/Application.php on line 167
+[Sun Aug 14 12:04:27 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 177
+[Sun Aug 14 12:04:27 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: No ending delimiter '/' found in /home/errorist/projects/php/mooframe/core/Application.php on line 167
+[Sun Aug 14 12:04:27 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier ':' in /home/errorist/projects/php/mooframe/core/Application.php on line 167
+[Sun Aug 14 12:04:27 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 177
+[Sun Aug 14 12:04:27 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 177
+[Sun Aug 14 12:04:27 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:04:49 2011] [error] [client 127.0.0.1] PHP Warning:  str_replace() expects at least 3 parameters, 2 given in /home/errorist/projects/php/mooframe/core/Application.php on line 163
+[Sun Aug 14 12:04:49 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: No ending delimiter '/' found in /home/errorist/projects/php/mooframe/core/Application.php on line 167
+[Sun Aug 14 12:04:49 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 177
+[Sun Aug 14 12:04:49 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: No ending delimiter '/' found in /home/errorist/projects/php/mooframe/core/Application.php on line 167
+[Sun Aug 14 12:04:49 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier ':' in /home/errorist/projects/php/mooframe/core/Application.php on line 167
+[Sun Aug 14 12:04:49 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 177
+[Sun Aug 14 12:04:49 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 177
+[Sun Aug 14 12:04:50 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:05:53 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: No ending delimiter '/' found in /home/errorist/projects/php/mooframe/core/Application.php on line 167
+[Sun Aug 14 12:05:53 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 177
+[Sun Aug 14 12:05:53 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: No ending delimiter '/' found in /home/errorist/projects/php/mooframe/core/Application.php on line 167
+[Sun Aug 14 12:05:53 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier ':' in /home/errorist/projects/php/mooframe/core/Application.php on line 167
+[Sun Aug 14 12:05:53 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 177
+[Sun Aug 14 12:05:53 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 177
+[Sun Aug 14 12:05:54 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:06:20 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier '[' in /home/errorist/projects/php/mooframe/core/Application.php on line 169
+[Sun Aug 14 12:06:20 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 179
+[Sun Aug 14 12:06:20 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier '/' in /home/errorist/projects/php/mooframe/core/Application.php on line 169
+[Sun Aug 14 12:06:20 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier 'a' in /home/errorist/projects/php/mooframe/core/Application.php on line 169
+[Sun Aug 14 12:06:20 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 179
+[Sun Aug 14 12:06:20 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 179
+[Sun Aug 14 12:06:21 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:06:55 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier '[' in /home/errorist/projects/php/mooframe/core/Application.php on line 171
+[Sun Aug 14 12:06:55 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 181
+[Sun Aug 14 12:06:55 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier '/' in /home/errorist/projects/php/mooframe/core/Application.php on line 171
+[Sun Aug 14 12:06:55 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier 'a' in /home/errorist/projects/php/mooframe/core/Application.php on line 171
+[Sun Aug 14 12:06:55 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 181
+[Sun Aug 14 12:06:55 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 181
+[Sun Aug 14 12:06:56 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:07:36 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier '[' in /home/errorist/projects/php/mooframe/core/Application.php on line 169
+[Sun Aug 14 12:07:36 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 179
+[Sun Aug 14 12:07:36 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier '/' in /home/errorist/projects/php/mooframe/core/Application.php on line 169
+[Sun Aug 14 12:07:36 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier 'a' in /home/errorist/projects/php/mooframe/core/Application.php on line 169
+[Sun Aug 14 12:07:36 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 179
+[Sun Aug 14 12:07:36 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 179
+[Sun Aug 14 12:07:37 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:07:56 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier '[' in /home/errorist/projects/php/mooframe/core/Application.php on line 171
+[Sun Aug 14 12:07:56 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 181
+[Sun Aug 14 12:07:56 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier '/' in /home/errorist/projects/php/mooframe/core/Application.php on line 171
+[Sun Aug 14 12:07:56 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier 'a' in /home/errorist/projects/php/mooframe/core/Application.php on line 171
+[Sun Aug 14 12:07:56 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 181
+[Sun Aug 14 12:07:56 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 181
+[Sun Aug 14 12:07:57 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:08:07 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier '[' in /home/errorist/projects/php/mooframe/core/Application.php on line 171
+[Sun Aug 14 12:08:07 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 181
+[Sun Aug 14 12:08:07 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier '/' in /home/errorist/projects/php/mooframe/core/Application.php on line 171
+[Sun Aug 14 12:08:07 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier 'a' in /home/errorist/projects/php/mooframe/core/Application.php on line 171
+[Sun Aug 14 12:08:07 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 181
+[Sun Aug 14 12:08:07 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 181
+[Sun Aug 14 12:08:08 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:08:42 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier '[' in /home/errorist/projects/php/mooframe/core/Application.php on line 173
+[Sun Aug 14 12:08:42 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 183
+[Sun Aug 14 12:08:42 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier '/' in /home/errorist/projects/php/mooframe/core/Application.php on line 173
+[Sun Aug 14 12:08:42 2011] [error] [client 127.0.0.1] PHP Warning:  preg_match() [<a href='function.preg-match'>function.preg-match</a>]: Unknown modifier 'a' in /home/errorist/projects/php/mooframe/core/Application.php on line 173
+[Sun Aug 14 12:08:42 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 183
+[Sun Aug 14 12:08:42 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 183
+[Sun Aug 14 12:08:43 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:08:54 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 183
+[Sun Aug 14 12:08:55 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:09:34 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined index: name in /home/errorist/projects/php/mooframe/core/Application.php on line 179
+[Sun Aug 14 12:09:35 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:11:31 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:14:44 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:14:54 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:15:24 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:17:07 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:18:21 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:18:54 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:19:05 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:19:29 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:19:46 2011] [error] [client 127.0.0.1] PHP Warning:  require_once(Application.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home/errorist/projects/php/mooframe/core/Router.php on line 2
+[Sun Aug 14 12:19:46 2011] [error] [client 127.0.0.1] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required 'Application.php' (include_path='.:/usr/share/php:/usr/share/pear') in /home/errorist/projects/php/mooframe/core/Router.php on line 2
+[Sun Aug 14 12:19:46 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:20:27 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:20:51 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:23:25 2011] [error] [client 127.0.0.1] PHP Warning:  require_once(../app/controller/indexController.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home/errorist/projects/php/mooframe/core/Application.php on line 61
+[Sun Aug 14 12:23:25 2011] [error] [client 127.0.0.1] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required '../app/controller/indexController.php' (include_path='.:/usr/share/php:/usr/share/pear') in /home/errorist/projects/php/mooframe/core/Application.php on line 61
+[Sun Aug 14 12:23:25 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:24:20 2011] [error] [client 127.0.0.1] PHP Deprecated:  Function call_user_method_array() is deprecated in /home/errorist/projects/php/mooframe/core/Application.php on line 78
+[Sun Aug 14 12:24:21 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:24:36 2011] [error] [client 127.0.0.1] PHP Deprecated:  Function call_user_method_array() is deprecated in /home/errorist/projects/php/mooframe/core/Application.php on line 76
+[Sun Aug 14 12:24:36 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:24:48 2011] [error] [client 127.0.0.1] PHP Deprecated:  Function call_user_method_array() is deprecated in /home/errorist/projects/php/mooframe/core/Application.php on line 75
+[Sun Aug 14 12:24:48 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:25:13 2011] [error] [client 127.0.0.1] PHP Deprecated:  Function call_user_method_array() is deprecated in /home/errorist/projects/php/mooframe/core/Application.php on line 75
+[Sun Aug 14 12:25:13 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:26:50 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:27:01 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:28:00 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:28:17 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:28:46 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:29:39 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:29:54 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:30:26 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:33:57 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:35:07 2011] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/errorist/projects/php/mooframe/core/Application.php on line 70
+[Sun Aug 14 12:35:08 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:35:22 2011] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected T_VARIABLE in /home/errorist/projects/php/mooframe/core/Application.php on line 70
+[Sun Aug 14 12:35:23 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:35:54 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:38:54 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:38:57 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:39:10 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:39:24 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:39:54 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:40:25 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:40:46 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:52:04 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 12:57:27 2011] [error] [client 127.0.0.1] PHP Warning:  scandir(../app/Foo/controller/) [<a href='function.scandir'>function.scandir</a>]: failed to open dir: No such file or directory in /home/errorist/projects/php/mooframe/core/Application.php on line 22
+[Sun Aug 14 12:57:27 2011] [error] [client 127.0.0.1] PHP Warning:  scandir() [<a href='function.scandir'>function.scandir</a>]: (errno 2): No such file or directory in /home/errorist/projects/php/mooframe/core/Application.php on line 22
+[Sun Aug 14 12:57:27 2011] [error] [client 127.0.0.1] PHP Warning:  Invalid argument supplied for foreach() in /home/errorist/projects/php/mooframe/core/Application.php on line 26
+[Sun Aug 14 12:57:27 2011] [error] [client 127.0.0.1] PHP Warning:  scandir(../app/MooApplication/controller/) [<a href='function.scandir'>function.scandir</a>]: failed to open dir: No such file or directory in /home/errorist/projects/php/mooframe/core/Application.php on line 22
+[Sun Aug 14 12:57:27 2011] [error] [client 127.0.0.1] PHP Warning:  scandir() [<a href='function.scandir'>function.scandir</a>]: (errno 2): No such file or directory in /home/errorist/projects/php/mooframe/core/Application.php on line 22
+[Sun Aug 14 12:57:27 2011] [error] [client 127.0.0.1] PHP Warning:  Invalid argument supplied for foreach() in /home/errorist/projects/php/mooframe/core/Application.php on line 26
+[Sun Aug 14 12:57:28 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 13:00:18 2011] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected ';' in /home/errorist/projects/php/mooframe/app/Foo/controller/indexController.php on line 7
+[Sun Aug 14 13:00:18 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 13:00:38 2011] [error] [client 127.0.0.1] PHP Fatal error:  Class 'Renderer' not found in /home/errorist/projects/php/mooframe/app/Foo/controller/indexController.php on line 7
+[Sun Aug 14 13:00:38 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 13:01:38 2011] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected T_CLASS, expecting T_FUNCTION in /home/errorist/projects/php/mooframe/core/Renderer.php on line 4
+[Sun Aug 14 13:01:39 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 13:03:14 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 13:03:41 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 13:05:27 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 13:05:31 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 13:06:43 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 13:06:47 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 13:07:39 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 13:07:44 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 13:07:59 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico

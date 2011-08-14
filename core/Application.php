@@ -1,4 +1,7 @@
 <?php
+require_once('Renderer.php');
+require_once('Router.php');
+
 class Application
 {
 	private $__data;
@@ -20,7 +23,7 @@ class Application
 			$path = '../app/' . $this->__data['name'] . '/controller/';
 			
 			$controllers = scandir($path);
-			$regex = '/^(\w+Controller)\.(\w+)$/';
+			$regex = '/^(\w+)(Controller)\.(\w+)$/';
 			
 			// Remove '.', '..' and non-controller-file entries
 			foreach ($controllers as $k => $v)
@@ -30,7 +33,9 @@ class Application
 					unset($controllers[$k]);
 				} else
 				{
-					$controllers[$k] = preg_replace($regex, '$1', $v);
+					$name = preg_replace($regex, '$1', $v);
+					$controllers[$name] = $name . 'Controller';
+					unset($controllers[$k]);
 				}
 			}
 			
@@ -48,30 +53,44 @@ class Application
 		}
 		
 		$controllerList = $this->getControllers();
-		
+
 		if (!isset($controllerList[$controller]))
 		{
 			return NULL;
 		}
 		
-		require_once('../app/controller/' . $controllerList[$controller] . '.php');
+		require_once('../app/' . $this->__data['name'] . '/controller/' . $controllerList[$controller] . '.php');
 		return new $controllerList[$controller];
 	}
 	
 	function dispatch($routingParams)
 	{
-		if (isset($routingParams['controller']))
+		if (!isset($routingParams['controller']) || empty($routingParams['controller']))
 		{
-			$controller = $this->getController($routingParams['controller']);
-			
-			if (!isset($controller) || (isset($routingParams['action']) && !method_exists($controller, $routingParams['action'])))
+			$controller = $this->getController('index');
+
+			if (!isset($controller))
 				return FALSE;
-				
-			if (!isset($routingParams['params']))
-				$routingParams['params'] = array();
-				
-			call_user_method_array($routingParams['action'], $controller, $routingParams['params']);
 		}
+
+		if (!isset($controller))
+			$controller = $this->getController($routingParams['controller']);
+
+		if (!isset($routingParams['action']) || empty($routingParams['action']) || ($routingParams['action'] != 'index' && !method_exists($controller, $routingParams['action'])))
+			$routingParams['action'] = 'index';
+
+		if (!isset($controller) || (isset($routingParams['action']) && !method_exists($controller, $routingParams['action'])))
+			return FALSE;
+
+		if (!isset($routingParams['params']))
+			$routingParams['params'] = array();
+			
+		$cwd = getcwd();
+		chdir('../app/' . $this->__data['name'] . '/');
+
+		call_user_func_array(array($controller, $routingParams['action']), $routingParams['params']);
+
+		chdir($cwd);
 	}
 
 	function __call($func, $args)
@@ -160,10 +179,12 @@ class Application
 				{
 					foreach ($r['args'] as $k => $v)
 					{
-						str_replace(":{$k}", $v);
+						$r['match'] = str_replace(":{$k}", $v, $r['match']);
 					}
 				}
-				
+
+				$r['match'] = '/' . str_replace("/", "\/", $r['match']) . '/';
+
 				if (preg_match($r['match'], $url))
 					$res[] = $r;
 			}
@@ -174,7 +195,7 @@ class Application
 	
 	function matchRoutingParams($routingParams)
 	{
-		if (isset($routingParams['application']) && $this->__data['name'] == $routingParams['name'])
+		if (isset($routingParams['application']) && $this->__data['name'] == $routingParams['application'])
 		{
 			if (!isset($routingParams['controller']) && !isset($routingParams['action']))
 			{

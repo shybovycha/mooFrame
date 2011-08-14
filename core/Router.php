@@ -5,47 +5,12 @@ class Router
 {
 	private $__applicationList = NULL, $__defaultApplication = NULL;
 
-	public function redirect($url = NULL)
-	{
-	}
-
-	public function httpError($error = NULL)
-	{
-	}
-
-	public function isApplicationListLoaded()
-	{
-		return (isset($this->__applicationList) && is_array($this->__applicationList));
-	}
-
 	public function getApplicationList()
 	{
 		if (!isset($this->__applicationList) || !is_array($this->__applicationList))
 			$this->loadApplicationList();
 
 		return $this->__applicationList;
-	}
-
-	public function getDefaultApplication()
-	{
-		if (!isset($this->__defaultApplication))
-		{
-			if (!$this->isApplicationListLoaded())
-			{
-				$this->getApplicationList();
-			}
-
-			foreach ($this->__applicationList as $v)
-			{
-				if ($v->getIsDefault())
-				{
-					$this->__defaultApplication = $v;
-					break;
-				}
-			}
-		}
-
-		return $this->__defaultApplication;
 	}
 
 	public function loadApplicationList()
@@ -100,7 +65,7 @@ class Router
 		
 		$pieces = preg_split('/\//', $url);
 		$routingParams = array();
-		
+
 		// URL pattern: application/controller/action/arg0/arg1/...
 		
 		// application name
@@ -125,7 +90,7 @@ class Router
 		{
 			$routingParams['params'] = array_splice($pieces, 4, count($pieces) - 4);
 		}
-		
+
 		$appList = $this->getApplicationList();
 		$routeMatchingApps = array();
 		
@@ -167,7 +132,7 @@ class Router
 			return $res;
 		} else
 		{
-			return $_POST;
+			return $arr;
 		}
 	}
 

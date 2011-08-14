@@ -1,9 +1,9 @@
 <?php
-	class IndexController
+	class indexController
 	{
 		public function index()
 		{
-			echo 'hello, world!';
+			Renderer::render('view/template.phtml', array('moo' => 'moo title', '_content' => '<h1>Hello, World!</h1>'));
 		}
 		
 		public function hello($name)
