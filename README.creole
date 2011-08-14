@@ -19,15 +19,15 @@ It is developed in a **very specific** way to make the use of itself most comfor
 == Views ==
 
 # Create `YourApplicationName/view/` directory with `MyTemplate.phtml` file within
-# Add this code to it:
-  <head>
-	<title>
-	  <?php echo $this->title; ?>
-	</title>
-  </head>
-  <body>
-    <h1><?php echo $this->body; ?></h1>
-  </body> 
-# Change the `YourApplicationName/controller/index.php` file's code to
+# Add this code to it:\\
+  <head>\\
+	<title>\\
+	  <?php echo $this->title; ?>\\
+	</title>\\
+  </head>\\
+  <body>\\
+    <h1><?php echo $this->body; ?></h1>\\
+  </body>\\
+# Change the `YourApplicationName/controller/index.php` file's code to\\
   Renderer::render('view/MyTemplate.phtml', array('title' => 'My First Application', 'body' => 'Hello, World!'));
 # Go to your host in web-browser and enjoy =)
