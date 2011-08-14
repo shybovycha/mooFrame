@@ -1,5 +1,7 @@
 <?php
-	class indexController
+	Renderer::render('view/template.phtml', array('moo' => 'moo title', '_content' => '<h1>Hello, World!</h1>'));
+	
+/*	class index
 	{
 		public function index()
 		{
@@ -14,3 +16,4 @@
 		{
 		}
 	}
+*/

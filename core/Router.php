@@ -3,7 +3,7 @@ require_once('Application.php');
 
 class Router
 {
-	private $__applicationList = NULL, $__defaultApplication = NULL;
+	private $__applicationList = NULL, $__defaultApplication = NULL, $__applicationParams;
 
 	public function getApplicationList()
 	{
@@ -32,6 +32,8 @@ class Router
 				
 				if (is_dir($path . '/etc/') && file_exists($path . '/etc/routes.php'))
 				{
+					ob_start();
+					
 					include($path . '/etc/routes.php');
 
 					if (isset($routes))
@@ -45,6 +47,9 @@ class Router
 
 						unset($isDefault);
 					}
+					
+					$logMessage = ob_get_contents();
+					ob_end_clean();
 				}
 
 				$this->__applicationList[$app] = $instance;
@@ -60,6 +65,8 @@ class Router
 		{
 			$url = $_SERVER['REQUEST_URI'];
 		}
+		
+		$this->__applicationParams = NULL;
 		
 		$url = str_replace($_SERVER['SCRIPT_NAME'], '', $url);
 		
@@ -89,6 +96,7 @@ class Router
 		if (count($pieces) > 4)
 		{
 			$routingParams['params'] = array_splice($pieces, 4, count($pieces) - 4);
+			$this->__applicationParams = $routingParams['params'];
 		}
 
 		$appList = $this->getApplicationList();
@@ -136,8 +144,9 @@ class Router
 		}
 	}
 
-	public function getParams()
+	public function getUrlParams()
 	{
+		return $this->getArrayValues($this->__applicationParams, func_get_args());
 	}
 
 	public function getPostParams()
@@ -150,7 +159,7 @@ class Router
 		return $this->getArrayValues($_FILES, func_get_args());
 	}
 	
-	public function getUrl($applicationName, $controllerName, $actionName = NULL)
+	public function getUrl($applicationName, $controllerName = NULL, $actionName = NULL)
 	{
 		$appList = $this->getApplicationList();
 		
@@ -184,8 +193,6 @@ class Router
 		$controller = $application->getController($controllerName);
 		
 		$actionList = get_class_methods($controller);
-		
-		var_dump($controllerName, $actionList, $actionName);
 		
 		if (isset($actionName) && !isset($actionList[$actionName]))
 		{

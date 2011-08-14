@@ -1,40 +1,40 @@
 <?php
-		class __renderer__
+	class __renderer__
+	{
+		private $__data = array();
+
+		public function __set($key, $value)
 		{
-			private $__data = array();
-
-			public function __set($key, $value)
-			{
-				$this->__data[$key] = $value;
-			}
-
-			public function __get($key)
-			{
-				return (isset($this->__data[$key]) ? $this->__data[$key] : NULL);
-			}
-
-			public function partial($file, $args = NULL)
-			{
-				$renderer = new self();
-				return $renderer->render($file, $args);
-			}
-
-			public function render($file, $args = NULL)
-			{
-				if (!file_exists($file))
-					return NULL;
-
-				if (isset($args) && is_array($args))
-					$this->__data = $args;
-
-				ob_start();
-				include($file);
-				$res = ob_get_contents();
-				ob_end_clean();
-
-				return $res;
-			}
+			$this->__data[$key] = $value;
 		}
+
+		public function __get($key)
+		{
+			return (isset($this->__data[$key]) ? $this->__data[$key] : NULL);
+		}
+
+		public function partial($file, $args = NULL)
+		{
+			$renderer = new self();
+			return $renderer->render($file, $args);
+		}
+
+		public function render($file, $args = NULL)
+		{
+			if (!file_exists($file))
+				return NULL;
+
+			if (isset($args) && is_array($args))
+				$this->__data = $args;
+
+			ob_start();
+			include($file);
+			$res = ob_get_contents();
+			ob_end_clean();
+
+			return $res;
+		}
+	}
 
 	class Renderer
 	{

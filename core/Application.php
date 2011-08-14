@@ -15,83 +15,6 @@ class Application
 
 		return $this;
 	}
-	
-	function getControllers()
-	{
-		if (!isset($this->__data['controllers']))
-		{
-			$path = '../app/' . $this->__data['name'] . '/controller/';
-			
-			$controllers = scandir($path);
-			$regex = '/^(\w+)(Controller)\.(\w+)$/';
-			
-			// Remove '.', '..' and non-controller-file entries
-			foreach ($controllers as $k => $v)
-			{
-				if (!file_exists($path . $v) || !preg_match($regex, $v))
-				{
-					unset($controllers[$k]);
-				} else
-				{
-					$name = preg_replace($regex, '$1', $v);
-					$controllers[$name] = $name . 'Controller';
-					unset($controllers[$k]);
-				}
-			}
-			
-			$this->__data['controllers'] = $controllers;
-		}
-		
-		return $this->__data['controllers'];
-	}
-	
-	function getController($controller)
-	{
-		if (!isset($controller))
-		{
-			return NULL;
-		}
-		
-		$controllerList = $this->getControllers();
-
-		if (!isset($controllerList[$controller]))
-		{
-			return NULL;
-		}
-		
-		require_once('../app/' . $this->__data['name'] . '/controller/' . $controllerList[$controller] . '.php');
-		return new $controllerList[$controller];
-	}
-	
-	function dispatch($routingParams)
-	{
-		if (!isset($routingParams['controller']) || empty($routingParams['controller']))
-		{
-			$controller = $this->getController('index');
-
-			if (!isset($controller))
-				return FALSE;
-		}
-
-		if (!isset($controller))
-			$controller = $this->getController($routingParams['controller']);
-
-		if (!isset($routingParams['action']) || empty($routingParams['action']) || ($routingParams['action'] != 'index' && !method_exists($controller, $routingParams['action'])))
-			$routingParams['action'] = 'index';
-
-		if (!isset($controller) || (isset($routingParams['action']) && !method_exists($controller, $routingParams['action'])))
-			return FALSE;
-
-		if (!isset($routingParams['params']))
-			$routingParams['params'] = array();
-			
-		$cwd = getcwd();
-		chdir('../app/' . $this->__data['name'] . '/');
-
-		call_user_func_array(array($controller, $routingParams['action']), $routingParams['params']);
-
-		chdir($cwd);
-	}
 
 	function __call($func, $args)
 	{
@@ -130,35 +53,141 @@ class Application
 
 		return $this;
 	}
-
-	function getRootRoute()
+	
+	function getControllers()
 	{
-		if (isset($this->__data['routes']) && is_array($this->__data['routes']) && array_key_exists('root', $this->__data['routes']) && isset($this->__data['routes']['root']))
-			return $this->__data['routes']['root'];
+		if (!isset($this->__data['controllers']))
+		{
+			$path = '../app/' . $this->__data['name'] . '/controller/';
+			
+			$controllers = scandir($path);
+			$regex = '/^(\w+)\.(php)$/';
+			
+			// Remove '.', '..' and non-controller-file entries
+			foreach ($controllers as $k => $v)
+			{
+				if (!file_exists($path . $v) || !preg_match($regex, $v))
+				{
+					unset($controllers[$k]);
+				} else
+				{
+					$name = preg_replace($regex, '$1', $v);
+					$controllers[$name] = $name;
+					unset($controllers[$k]);
+				}
+			}
+			
+			$this->__data['controllers'] = $controllers;
+		}
+		
+		return $this->__data['controllers'];
+	}
+	
+	function getController($controller)
+	{
+		if (!isset($controller))
+		{
+			return NULL;
+		}
+		
+		$controllerList = $this->getControllers();
+
+		if (!isset($controllerList[$controller]))
+		{
+			return NULL;
+		}
+		
+		$controllerFileName = '../app/' . $this->__data['name'] . '/controller/' . $controllerList[$controller] . '.php';
+		
+		if (!file_exists($controllerFileName))
+			return NULL;
+		
+		ob_start();
+		include($controllerFileName);
+		ob_end_clean();
+		
+		if (!class_exists($controllerList[$controller]))
+		{
+			$cwd = getcwd();
+			chdir('../app/' . $this->__data['name'] . '/');
+			ob_start();
+			include('controller/' . $controllerList[$controller] . '.php');
+			$out = ob_get_contents();
+			ob_end_clean();
+			chdir($cwd);
+			
+			require('AbstractController.php');
+			$res = new AbstractController($controller, $out);
+			
+			return $res;
+		}
+		
+		$controller = new $controllerList[$controller];
+		return $controller;
+	}
+	
+	function dispatch($routingParams)
+	{
+		if (!isset($routingParams['controller']) || empty($routingParams['controller']))
+		{
+			$routingParams['controller'] = 'index';
+			$controller = $this->getController('index');
+
+			if (!isset($controller))
+				return FALSE;
+		}
+
+		if (!isset($controller))
+			$controller = $this->getController($routingParams['controller']);
+			
+		$controllerClassName = get_class($controller);
+		
+		if ($controllerClassName != $routingParams['controller'])
+		{
+			if ($controllerClassName != 'AbstractController')
+			{
+				return FALSE;
+			} else
+			{
+				echo $controller->getContent();
+				
+				return TRUE;
+			}	
+		}
+
+		if (!isset($routingParams['action']) || empty($routingParams['action']) || ($routingParams['action'] != 'index' && !method_exists($controller, $routingParams['action'])))
+			$routingParams['action'] = 'index';
+
+		if (!isset($controller) || (isset($routingParams['action']) && !method_exists($controller, $routingParams['action'])))
+			return FALSE;
+
+		if (!isset($routingParams['params']))
+			$routingParams['params'] = array();
+			
+		$cwd = getcwd();
+		chdir('../app/' . $this->__data['name'] . '/');
+
+		call_user_func_array(array($controller, $routingParams['action']), $routingParams['params']);
+		
+		chdir($cwd);
 	}
 	
 	function getRootController()
 	{
 		if (isset($this->__data['routes']) && isset($this->__data['routes']['root']) && isset($this->__data['routes']['root']['controller']))
 		{
-			$controllerName = $this->__data['routes']['root']['controller'] . 'Controller';
+			$controllerName = $this->__data['routes']['root']['controller'];
 			$path = '../app/' . $this->__data['name'] . '/controller/' . $controllerName . '.php';
 			
 			if (file_exists($path))
 			{
+				//ob_start();
 				require_once($path);
-				return new $controllerName;
+				$controller = new $controllerName;
+				//$logMessage = ob_get_contents();
+				//ob_end_clean();
+				return $controller;
 			}
-		}
-		
-		return NULL;
-	}
-	
-	function getDefaultAction()
-	{
-		if (isset($this->__data['routes']) && isset($this->__data['routes']['root']) && isset($this->__data['routes']['root']['action']))
-		{
-			return $this->__data['routes']['root']['action'];
 		}
 		
 		return NULL;
@@ -226,6 +255,16 @@ class Application
 		}
 		
 		return FALSE;
+	}
+	
+	function getDefaultAction()
+	{
+		if (isset($this->__data['routes']) && isset($this->__data['routes']['root']) && isset($this->__data['routes']))
+		{
+			return $this->__data['routes']['root']['action'];
+		}
+		
+		return NULL;
 	}
 }
 

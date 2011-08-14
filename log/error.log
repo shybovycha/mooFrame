@@ -237,3 +237,100 @@
 [Sun Aug 14 13:07:39 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
 [Sun Aug 14 13:07:44 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
 [Sun Aug 14 13:07:59 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:31:09 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:49:31 2011] [error] [client 127.0.0.1] PHP Parse error:  syntax error, unexpected T_RETURN in /home/errorist/projects/php/mooframe/core/Application.php on line 230
+[Sun Aug 14 16:49:31 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:49:57 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:50:16 2011] [error] [client 127.0.0.1] PHP Fatal error:  Class 'index' not found in /home/errorist/projects/php/mooframe/core/Application.php on line 103
+[Sun Aug 14 16:50:17 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:50:43 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:50:48 2011] [error] [client 127.0.0.1] PHP Fatal error:  Class 'index' not found in /home/errorist/projects/php/mooframe/core/Application.php on line 103
+[Sun Aug 14 16:50:49 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:52:45 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined variable: controlerFileName in /home/errorist/projects/php/mooframe/core/Application.php on line 106
+[Sun Aug 14 16:52:45 2011] [error] [client 127.0.0.1] PHP Warning:  require_once(/home/errorist/projects/php/mooframe/www) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home/errorist/projects/php/mooframe/core/Application.php on line 106
+[Sun Aug 14 16:52:45 2011] [error] [client 127.0.0.1] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required '' (include_path='.:/usr/share/php:/usr/share/pear') in /home/errorist/projects/php/mooframe/core/Application.php on line 106
+[Sun Aug 14 16:52:45 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:52:56 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:53:11 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:53:18 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:53:42 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:54:09 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:54:20 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:54:26 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:54:34 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:56:22 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:57:04 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:57:13 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:57:23 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:57:56 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:58:08 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:58:16 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:58:34 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:58:38 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:59:03 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:59:28 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:59:51 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 16:59:58 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:01:37 2011] [error] [client 127.0.0.1] PHP Fatal error:  Class 'index' not found in /home/errorist/projects/php/mooframe/core/Application.php on line 111
+[Sun Aug 14 17:01:38 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:01:58 2011] [error] [client 127.0.0.1] PHP Fatal error:  Class 'index' not found in /home/errorist/projects/php/mooframe/core/Application.php on line 111
+[Sun Aug 14 17:01:59 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:02:19 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:02:47 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:02:55 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:04:59 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:05:09 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:05:16 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:17:01 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:17:16 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:17:30 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:18:04 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:18:28 2011] [error] [client 127.0.0.1] PHP Warning:  require_once(../app/Foo/controller/index.php) [<a href='function.require-once'>function.require-once</a>]: failed to open stream: No such file or directory in /home/errorist/projects/php/mooframe/core/Application.php on line 114
+[Sun Aug 14 17:18:28 2011] [error] [client 127.0.0.1] PHP Fatal error:  require_once() [<a href='function.require'>function.require</a>]: Failed opening required '../app/Foo/controller/index.php' (include_path='.:/usr/share/php:/usr/share/pear') in /home/errorist/projects/php/mooframe/core/Application.php on line 114
+[Sun Aug 14 17:18:29 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:19:34 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:20:52 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:22:22 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:22:28 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:22:38 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:23:09 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:23:19 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:23:32 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:24:08 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:24:28 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:24:47 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:25:03 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:25:15 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:25:22 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:25:49 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:26:16 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:26:29 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:26:38 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:26:59 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:27:38 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:28:17 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:28:26 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:28:42 2011] [error] [client 127.0.0.1] PHP Notice:  Undefined variable: out in /home/errorist/projects/php/mooframe/core/Application.php on line 122
+[Sun Aug 14 17:28:43 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:28:50 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:29:12 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:29:30 2011] [error] [client 127.0.0.1] PHP Warning:  include_once(/controller/index.php) [<a href='function.include-once'>function.include-once</a>]: failed to open stream: No such file or directory in /home/errorist/projects/php/mooframe/core/Application.php on line 114
+[Sun Aug 14 17:29:30 2011] [error] [client 127.0.0.1] PHP Warning:  include_once() [<a href='function.include'>function.include</a>]: Failed opening '/controller/index.php' for inclusion (include_path='.:/usr/share/php:/usr/share/pear') in /home/errorist/projects/php/mooframe/core/Application.php on line 114
+[Sun Aug 14 17:29:30 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:29:41 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:29:50 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:29:57 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:30:12 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:30:46 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:31:03 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:31:32 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:31:53 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:32:01 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:32:16 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:32:30 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:32:35 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:32:55 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:33:09 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:33:37 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:33:47 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
+[Sun Aug 14 17:33:56 2011] [error] [client 127.0.0.1] File does not exist: /home/errorist/projects/php/mooframe/www/favicon.ico
