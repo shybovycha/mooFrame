@@ -442,3 +442,7 @@
 127.0.0.1 - - [14/Aug/2011:17:33:47 +0300] "GET /favicon.ico HTTP/1.1" 404 501 "-" "Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1"
 127.0.0.1 - - [14/Aug/2011:17:33:55 +0300] "GET /index.php/Foo/ HTTP/1.1" 200 353 "-" "Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1"
 127.0.0.1 - - [14/Aug/2011:17:33:56 +0300] "GET /favicon.ico HTTP/1.1" 404 501 "-" "Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1"
+127.0.0.1 - - [14/Aug/2011:17:42:29 +0300] "GET /index.php/Foo/ HTTP/1.1" 200 354 "-" "Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1"
+127.0.0.1 - - [14/Aug/2011:17:42:30 +0300] "GET /favicon.ico HTTP/1.1" 404 501 "-" "Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1"
+127.0.0.1 - - [14/Aug/2011:17:43:15 +0300] "GET /index.php/Foo/ HTTP/1.1" 200 354 "-" "Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1"
+127.0.0.1 - - [14/Aug/2011:17:43:15 +0300] "GET /favicon.ico HTTP/1.1" 404 501 "-" "Mozilla/5.0 (X11; Linux i686) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.112 Safari/535.1"
