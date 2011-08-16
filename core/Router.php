@@ -159,9 +159,71 @@ class Router
 		return $this->getArrayValues($_FILES, func_get_args());
 	}
 	
-	public function getUrl($applicationName, $controllerName = NULL, $actionName = NULL)
+	/*
+	 * Retrieves object URL
+	 * 
+	 * The $object argument determines which object should be mapped.
+	 * 
+	 * $object format:
+	 * 
+	 * * app:<application>
+	 *     returns default <application>'s controller and action URL
+	 * 
+	 * * app:<application>/<controller>
+	 *     returns default <application> <controller>'s URL
+	 * 
+	 * * app:<application>/<controller>/<action>
+	 *     returns concrete <action> URL
+	 * 
+	 * * file:<filename>
+	 *     returns file URL. File should be located within www/ directory or it 
+	 *     would not be visible for client
+	 * 
+	 *     TODO:
+	 * 			when file is located within media/ - route paths from index.php
+	 * 			to that file first
+	 * 
+	 */
+	 
+	public function getUrl($object)
 	{
-		$appList = $this->getApplicationList();
+		$appRegex = '/^app:(.+)$/';
+		$fileRegex = '/^file:(.+)$/';
+		
+		$pieces = array();
+		$result = NULL;
+		
+		if (preg_match($appRegex, $object))
+		{
+		} else
+		if (preg_match($fileRegex, $object, $pieces))
+		{
+			if (!is_array($pieces) || count($pieces) < 2)
+				return NULL;
+				
+			$cwd = getcwd();
+			chdir(dirname(__FILE__));
+				
+			$mediaPath = '../www/';
+				
+			// cwd points to current application's directory
+			$files = scandir($mediaPath);
+			
+			foreach ($files as $f)
+			{
+				if (file_exists($mediaPath . $f) && $f == $pieces[1])
+				{
+					$result = $f;
+					break;
+				}
+			}
+			
+			chdir($cwd);
+		}
+		
+		return $result;
+		
+		/*$appList = $this->getApplicationList();
 		
 		if (!isset($applicationName) || !isset($appList[$applicationName]))
 		{
@@ -204,6 +266,6 @@ class Router
 			return "{$applicationName}/{$controllerName}/{$actionName}";
 		}
 		
-		return "{$applicationName}/{$controllerName}/";
+		return "{$applicationName}/{$controllerName}/";*/
 	}
 }

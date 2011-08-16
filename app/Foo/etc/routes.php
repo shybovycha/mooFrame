@@ -1,7 +1,7 @@
 <?php
 	$routes = array(
 		'root' => array(
-			//'match' => '/:arg',
+			'match' => '/',
 			//'args' => array('arg' => '[a-z]{1,}'),
 			//'arg' => '[a-z]{1,}',
 			//'rewrite' => true,

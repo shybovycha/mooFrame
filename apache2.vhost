@@ -1,0 +1,27 @@
+<VirtualHost *:80>
+    ServerName frame.local 
+    DocumentRoot /home/likewise-open/ISM-ECOMPANY/a.shoobovych/projects/mooFrame/www/
+
+	<Directory />
+		Options FollowSymLinks
+		AllowOverride All
+	</Directory> 
+	
+    <Directory "/home/likewise-open/ISM-ECOMPANY/a.shoobovych/projects/mooFrame/www/">
+       Options Indexes MultiViews FollowSymLinks
+       AllowOverride All
+       Order allow,deny
+       Allow from all
+   </Directory>
+
+	<Directory "/home/likewise-open/ISM-ECOMPANY/a.shoobovych/projects/mooFrame/media/">
+       Options Indexes MultiViews FollowSymLinks
+       AllowOverride All
+       Order allow,deny
+       Allow from all
+   </Directory>
+
+
+   ErrorLog /home/likewise-open/ISM-ECOMPANY/a.shoobovych/projects/mooFrame/log/error.log
+   CustomLog /home/likewise-open/ISM-ECOMPANY/a.shoobovych/projects/mooFrame/log/access.log combined
+</VirtualHost>

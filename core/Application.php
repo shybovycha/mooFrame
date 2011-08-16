@@ -60,6 +60,9 @@ class Application
 		{
 			$path = '../app/' . $this->__data['name'] . '/controller/';
 			
+			if (!file_exists($path) || !is_dir($path))
+				return NULL;
+			
 			$controllers = scandir($path);
 			$regex = '/^(\w+)\.(php)$/';
 			
