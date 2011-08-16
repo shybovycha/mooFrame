@@ -15,7 +15,8 @@ class Router
 
 	public function loadApplicationList()
 	{
-		$appList = scandir('../app/');
+		$appDir = '../app';
+		$appList = scandir($appDir);
 
 		$this->__applicationList = array();
 
@@ -24,17 +25,19 @@ class Router
 			if (preg_match('/^\.{1,2}$/', $app))
 				continue;
 
-			if (is_dir('../app/' . $app))
+			$appPath = self::formatPath($appDir, $app);
+
+			if (is_dir($appPath))
 			{
-				$path = '../app/' . $app . '/';
+				$path = self::formatPath($appPath . '/');
 
 				$instance = new Application($app);
-				
-				if (is_dir($path . '/etc/') && file_exists($path . '/etc/routes.php'))
+
+				if (is_dir(self::formatPath($path . '/etc/')) && file_exists(self::formatPath($path . '/etc/routes.php')))
 				{
 					ob_start();
 					
-					include($path . '/etc/routes.php');
+					include(self::formatPath($path . '/etc/routes.php'));
 
 					if (isset($routes))
 						$instance->setRoutes($routes);
@@ -59,6 +62,16 @@ class Router
 		}
 	}
 
+	public static function formatPath()
+	{
+		$path = implode('/', func_get_args());
+		$path = preg_replace('/\/\//', '/', $path);
+		$path = preg_replace('/\\\\/',  '\\', $path);
+		//$path = preg_replace('/\\//', '\\', $path);
+
+		return $path;
+	}
+
 	public function route($url = NULL)
 	{
 		if (!isset($url))
@@ -69,9 +82,35 @@ class Router
 		$this->__applicationParams = NULL;
 		
 		$url = str_replace($_SERVER['SCRIPT_NAME'], '', $url);
-		
+
+		$mediaPath = '../media/';
+
+		if (preg_match('/.+\..+$/', $url) && file_exists(self::formatPath($mediaPath . $url)))
+		{
+			$file = self::formatPath($mediaPath, $url);
+
+			$finfo = finfo_open(FILEINFO_MIME_TYPE);
+			finfo_file($finfo, $file);
+			$f = fopen($file, 'r');
+
+			if (headers_sent())
+				return FALSE;
+
+			header('Content-Type: ' . finfo_file($finfo, $file));
+
+			echo stream_get_contents($f);
+
+			fclose($f);
+			finfo_close($finfo);
+
+			return TRUE;
+		}
+
 		$pieces = preg_split('/\//', $url);
 		$routingParams = array();
+
+		if (empty($url))
+			$url =  '/';
 
 		// URL pattern: application/controller/action/arg0/arg1/...
 		
@@ -101,7 +140,7 @@ class Router
 
 		$appList = $this->getApplicationList();
 		$routeMatchingApps = array();
-		
+
 		foreach ($appList as $app)
 		{
 			if ($app->matchUrl($url) || $app->matchRoutingParams($routingParams))
@@ -185,7 +224,7 @@ class Router
 	 * 
 	 */
 	 
-	public function getUrl($object)
+	public static function getUrl($object)
 	{
 		$appRegex = '/^app:(.+)$/';
 		$fileRegex = '/^file:(.+)$/';
@@ -204,14 +243,14 @@ class Router
 			$cwd = getcwd();
 			chdir(dirname(__FILE__));
 				
-			$mediaPath = '../www/';
+			$mediaPath = '../media/';
 				
 			// cwd points to current application's directory
 			$files = scandir($mediaPath);
-			
+
 			foreach ($files as $f)
 			{
-				if (file_exists($mediaPath . $f) && $f == $pieces[1])
+				if (file_exists(Router::formatPath($mediaPath . $f)) && $f == $pieces[1])
 				{
 					$result = $f;
 					break;
@@ -221,7 +260,7 @@ class Router
 			chdir($cwd);
 		}
 		
-		return $result;
+		return Router::formatPath('index.php', $result);
 		
 		/*$appList = $this->getApplicationList();
 		
