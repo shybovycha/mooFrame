@@ -21,15 +21,15 @@ It is developed in a **very specific** way to make the use of itself most comfor
 *  Create `YourApplicationName/view/` directory with `MyTemplate.phtml` file within
 *  Add this code to it:
 
-	&lt;head&gt;
-		&lt;title&gt;
-			&lt;?php echo $this-&gt;title; ?&gt;
-		&lt;/title&gt;
-	&lt;/head&gt;
-	&lt;body&gt;
-		&lt;h1&gt;&lt;?php echo $this-&gt;body; ?&gt;&lt;/h1&gt;
-	&lt;/body&gt;
-  
+		<head>
+			<title>
+				<?php echo $this->title; ?>
+			</title>
+		</head>
+		<body>
+			<h1><?php echo $this->body; ?></h1>
+		</body>
+ 
 *  Change the `YourApplicationName/controller/index.php` file's code to
 
     Renderer::render('view/MyTemplate.phtml', array('title' => 'My First Application', 'body' => 'Hello, World!'));
