@@ -32,6 +32,6 @@ It is developed in a **very specific** way to make the use of itself most comfor
  
 *  Change the `YourApplicationName/controller/index.php` file's code to
 
-    Renderer::render('view/MyTemplate.phtml', array('title' => 'My First Application', 'body' => 'Hello, World!'));
+		Renderer::render('view/MyTemplate.phtml', array('title' => 'My First Application', 'body' => 'Hello, World!'));
     
 *  Go to your host in web-browser and enjoy =)
