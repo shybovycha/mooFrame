@@ -5,15 +5,71 @@ class Router
 {
 	private $__applicationList = NULL, $__defaultApplication = NULL, $__applicationParams;
 
+	public static function getAppList()
+	{
+		$cwd = getcwd();
+		chdir(dirname(__FILE__));
+
+		$appDir = '../app';
+		$appList = scandir($appDir);
+
+		$__applicationList = array();
+
+		foreach ($appList as $app)
+		{
+			if (preg_match('/^\.{1,2}$/', $app))
+				continue;
+
+			$appPath = self::formatPath($appDir, $app);
+
+			if (is_dir($appPath))
+			{
+				$path = self::formatPath($appPath . '/');
+
+				$instance = new Application($app);
+
+				if (is_dir(self::formatPath($path . '/etc/')) && file_exists(self::formatPath($path . '/etc/routes.php')))
+				{
+					ob_start();
+					
+					include(self::formatPath($path . '/etc/routes.php'));
+
+					if (isset($routes))
+						$instance->setRoutes($routes);
+
+					unset($routes);
+
+					if (isset($isDefault) && $isDefault === TRUE)
+					{
+						$instance->setIsDefault(TRUE);
+
+						unset($isDefault);
+					}
+					
+					$logMessage = ob_get_contents();
+					ob_end_clean();
+				}
+
+				$__applicationList[$app] = $instance;
+
+				unset($instance);
+			}
+		}
+
+		chdir($cwd);
+
+		return $__applicationList;
+	}
+
 	public function getApplicationList()
 	{
 		if (!isset($this->__applicationList) || !is_array($this->__applicationList))
-			$this->loadApplicationList();
+			$this->__applicationList = self::getAppList();
 
 		return $this->__applicationList;
 	}
 
-	public function loadApplicationList()
+/*	public function loadApplicationList()
 	{
 		$appDir = '../app';
 		$appList = scandir($appDir);
@@ -60,7 +116,7 @@ class Router
 				unset($instance);
 			}
 		}
-	}
+	}*/
 
 	public static function formatPath()
 	{
@@ -232,8 +288,32 @@ class Router
 		$pieces = array();
 		$result = NULL;
 		
-		if (preg_match($appRegex, $object))
+		if (preg_match($appRegex, $object, $pieces))
 		{
+			if (count($pieces) < 2)
+				return NULL;
+
+			$pieces = preg_split('/\//', $pieces[1]);
+
+			$appList = Router::getAppList();
+
+			if (!isset($appList[$pieces[0]]))
+				return NULL;
+
+			//var_dump($appList[$pieces[0]]);
+
+			$app = $appList[$pieces[0]];
+			$controllers = $app->getControllers();
+
+			if (isset($pieces[1]) && isset($controllers[$pieces[1]]))
+			{
+				if (isset($pieces[2]))
+					$result = Router::formatPath($pieces[0], $pieces[1], $pieces[2]); else
+						$result = Router::formatPath($pieces[0], $pieces[1]);
+			} else
+			{
+				$result = Router::formatPath($pieces[0]);
+			}
 		} else
 		if (preg_match($fileRegex, $object, $pieces))
 		{
@@ -243,17 +323,23 @@ class Router
 			$cwd = getcwd();
 			chdir(dirname(__FILE__));
 				
-			$mediaPath = '../media/';
+			$mediaPaths = array('../www/', '../media/');
 				
-			// cwd points to current application's directory
-			$files = scandir($mediaPath);
-
-			foreach ($files as $f)
+			foreach ($mediaPaths as $dir)
 			{
-				if (file_exists(Router::formatPath($mediaPath . $f)) && $f == $pieces[1])
-				{
-					$result = $f;
+				if (isset($result))
 					break;
+
+				// cwd points to current application's directory
+				$files = scandir($dir);
+
+				foreach ($files as $f)
+				{
+					if (file_exists(Router::formatPath($dir . $f)) && $f == $pieces[1])
+					{
+						$result = $f;
+						break;
+					}
 				}
 			}
 			
@@ -261,50 +347,5 @@ class Router
 		}
 		
 		return Router::formatPath('index.php', $result);
-		
-		/*$appList = $this->getApplicationList();
-		
-		if (!isset($applicationName) || !isset($appList[$applicationName]))
-		{
-			return NULL;
-		}
-		
-		$application = $appList[$applicationName];
-		
-		$controllerList = $application->getControllers();
-		
-		if (!isset($controllerName))
-		{
-			$defaultAction = $application->getDefaultAction();
-			$rootController = $application->getRootController();
-			
-			if (!isset($defaultAction))
-			{
-				if (!isset($rootController))
-				{
-					return NULL;
-				}
-
-				return $rootController;
-			}
-			
-			return $defaultAction;
-		}
-		
-		$controller = $application->getController($controllerName);
-		
-		$actionList = get_class_methods($controller);
-		
-		if (isset($actionName) && !isset($actionList[$actionName]))
-		{
-			return NULL;
-		}
-		
-		if (!isset($actionName))
-		{
-			return "{$applicationName}/{$controllerName}/{$actionName}";
-		}
-		
-		return "{$applicationName}/{$controllerName}/";*/
 	}
 }
