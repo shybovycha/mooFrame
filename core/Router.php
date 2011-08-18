@@ -1,9 +1,11 @@
 <?php
+require_once('Log.php');
 require_once('Application.php');
 
 class Router
 {
-	private $__applicationList = NULL, $__defaultApplication = NULL, $__applicationParams;
+	private static $__applicationList = NULL;
+	private static $__applicationParams = NULL;
 
 	public static function getAppList()
 	{
@@ -61,62 +63,13 @@ class Router
 		return $__applicationList;
 	}
 
-	public function getApplicationList()
+	public static function getApplicationList()
 	{
-		if (!isset($this->__applicationList) || !is_array($this->__applicationList))
-			$this->__applicationList = self::getAppList();
+		if (!isset(self::$__applicationList) || !is_array(self::$__applicationList))
+			self::$__applicationList = self::getAppList();
 
-		return $this->__applicationList;
+		return self::$__applicationList;
 	}
-
-/*	public function loadApplicationList()
-	{
-		$appDir = '../app';
-		$appList = scandir($appDir);
-
-		$this->__applicationList = array();
-
-		foreach ($appList as $app)
-		{
-			if (preg_match('/^\.{1,2}$/', $app))
-				continue;
-
-			$appPath = self::formatPath($appDir, $app);
-
-			if (is_dir($appPath))
-			{
-				$path = self::formatPath($appPath . '/');
-
-				$instance = new Application($app);
-
-				if (is_dir(self::formatPath($path . '/etc/')) && file_exists(self::formatPath($path . '/etc/routes.php')))
-				{
-					ob_start();
-					
-					include(self::formatPath($path . '/etc/routes.php'));
-
-					if (isset($routes))
-						$instance->setRoutes($routes);
-
-					unset($routes);
-
-					if (isset($isDefault) && $isDefault === TRUE)
-					{
-						$instance->setIsDefault(TRUE);
-
-						unset($isDefault);
-					}
-					
-					$logMessage = ob_get_contents();
-					ob_end_clean();
-				}
-
-				$this->__applicationList[$app] = $instance;
-
-				unset($instance);
-			}
-		}
-	}*/
 
 	public static function formatPath()
 	{
@@ -128,14 +81,17 @@ class Router
 		return $path;
 	}
 
-	public function route($url = NULL)
+	public static function route($url = NULL)
 	{
 		if (!isset($url))
 		{
 			$url = $_SERVER['REQUEST_URI'];
 		}
 		
-		$this->__applicationParams = NULL;
+		self::$__applicationParams = NULL;
+
+		/*if (!preg_match(preg_quote($_SERVER['SCRIPT_NAME']), $url))
+			$url = trim($url, '/');*/
 		
 		$url = str_replace($_SERVER['SCRIPT_NAME'], '', $url);
 
@@ -150,7 +106,10 @@ class Router
 			$f = fopen($file, 'r');
 
 			if (headers_sent())
+			{
+				Log::message("Could not display '{$url}' file content: headers already sent, so the file would not be displayed properly anyway.");
 				return FALSE;
+			}
 
 			header('Content-Type: ' . finfo_file($finfo, $file));
 
@@ -168,33 +127,42 @@ class Router
 		if (empty($url))
 			$url =  '/';
 
+		// Bugfix:: when NetBeans starts XDebug session,
+		// it goes to http://myhost/blah-blah-blah/?XDEBUG_SESSION_START=netbeans-xdebug
+		// and router recognizes a controller named '?XDEBUG_SESSION_START'
+		// which is actually a bug
+		$getArgsListPattern = '/^\?.*/';
+
 		// URL pattern: application/controller/action/arg0/arg1/...
 		
 		// application name
 		if (isset($pieces[1]))
 		{
-			$routingParams['application'] = $pieces[1];
+			if (!preg_match($getArgsListPattern, $pieces[1]))
+				$routingParams['application'] = $pieces[1];
 		}
 		
 		// controller name
 		if (isset($pieces[2]))
 		{
-			$routingParams['controller'] = $pieces[2];
+			if (!preg_match($getArgsListPattern, $pieces[2]))
+				$routingParams['controller'] = $pieces[2];
 		}
 		
 		// action name
 		if (isset($pieces[3]))
 		{
-			$routingParams['action'] = $pieces[3];
+			if (!preg_match($getArgsListPattern, $pieces[3]))
+				$routingParams['action'] = $pieces[3];
 		}
 		
 		if (count($pieces) > 4)
 		{
 			$routingParams['params'] = array_splice($pieces, 4, count($pieces) - 4);
-			$this->__applicationParams = $routingParams['params'];
+			self::$__applicationParams = $routingParams['params'];
 		}
-
-		$appList = $this->getApplicationList();
+		
+		$appList = self::getApplicationList();
 		$routeMatchingApps = array();
 
 		foreach ($appList as $app)
@@ -207,7 +175,7 @@ class Router
 		}
 	}
 
-	protected function getArrayValues($arr)
+	protected static function getArrayValues($arr)
 	{
 		if (!isset($arr) || !is_array($arr))
 			return NULL;
@@ -239,19 +207,19 @@ class Router
 		}
 	}
 
-	public function getUrlParams()
+	public static function getUrlParams()
 	{
-		return $this->getArrayValues($this->__applicationParams, func_get_args());
+		return self::getArrayValues(self::$__applicationParams, func_get_args());
 	}
 
-	public function getPostParams()
+	public static function getPostParams()
 	{
-		return $this->getArrayValues($_POST, func_get_args());
+		return self::getArrayValues($_POST, func_get_args());
 	}
 
-	public function getFileParams()
+	public static function getFileParams()
 	{
-		return $this->getArrayValues($_FILES, func_get_args());
+		return self::getArrayValues($_FILES, func_get_args());
 	}
 	
 	/*
@@ -291,16 +259,20 @@ class Router
 		if (preg_match($appRegex, $object, $pieces))
 		{
 			if (count($pieces) < 2)
+			{
+				Log::message("Could not get '{$object}' [application] URL: not enough data (Should be 'app:AppName/Controller/Action/Arguments').");
 				return NULL;
+			}
 
 			$pieces = preg_split('/\//', $pieces[1]);
 
 			$appList = Router::getAppList();
 
 			if (!isset($appList[$pieces[0]]))
+			{
+				Log::message("Could not get '{$object}' [application] URL: there is no such application as '{$pieces[0]}'");
 				return NULL;
-
-			//var_dump($appList[$pieces[0]]);
+			}
 
 			$app = $appList[$pieces[0]];
 			$controllers = $app->getControllers();
@@ -318,7 +290,10 @@ class Router
 		if (preg_match($fileRegex, $object, $pieces))
 		{
 			if (!is_array($pieces) || count($pieces) < 2)
+			{
+				Log::message("Could not get '{$object}' [file] URL: not enough data (should be 'file:FilePath'; FilePath should be relative to the '/media/' folder)");
 				return NULL;
+			}
 				
 			$cwd = getcwd();
 			chdir(dirname(__FILE__));
@@ -345,7 +320,12 @@ class Router
 			
 			chdir($cwd);
 		}
+
+		if (!isset($result))
+		{
+			Log::message("Could not find '{$object}' file. Please, make sure argument format is 'file:FilePath' and FilePath is relative to the '/media/' folder.");
+		}
 		
-		return Router::formatPath('index.php', $result);
+		return Router::formatPath('/index.php', $result);
 	}
 }
