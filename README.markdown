@@ -1,5 +1,7 @@
 #  mooFrame [0.1.0]
 
+![logo](./logo.png)
+
 _mooFrame_ is a PHP framework, supposed to be a very lightweight and simple. 
 
 It is developed in a **very specific** way to make the use of itself most comfortable and easy for **me** (not you).
