@@ -1,4 +1,4 @@
-#  mooFrame
+#  mooFrame [0.1.0]
 
 _mooFrame_ is a PHP framework, supposed to be a very lightweight and simple. 
 
