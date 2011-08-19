@@ -1,0 +1,15 @@
+<table>
+	<?php $first = TRUE; ?>
+	<?php foreach ($this->rows as $r): ?>
+		<tr>
+			<?php foreach ($r as $k => $c): ?>
+				<?php if (!$first): ?>
+					<td><?php echo $c; ?></td>
+				<?php else: ?>
+					<td><?php echo $k; ?></td>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		</tr>
+		<?php if ($first) $first = FALSE; ?>
+	<?php endforeach; ?>
+</table>

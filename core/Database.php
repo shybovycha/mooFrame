@@ -62,25 +62,15 @@
 
 			try
 			{
-				$connection->beginTransaction();
-
 				if (Config::get('dbLogQuery'))
 				{
 					Log::message("Trying to execute query:", $query);
 				}
 
-				$connection->commit();
+				$query->execute();
 			} catch (Exception $e)
 			{
-				Log::message("DB querying failed during query execution with exception:", $e->getMessage(), "Trace:", $e->getTrace(), "Trying to roll back...");
-
-				try
-				{
-					$connection->rollBack();
-				} catch (Exception $e)
-				{
-					Log::message("Rolling back DB changes is not possible due to exception:", $e->getMessage(), "Trace:", $e->getTrace());
-				}
+				Log::message("DB querying failed during query execution with exception:", $e->getMessage(), "Trace:", $e->getTrace());
 
 				return NULL;
 			}
