@@ -35,3 +35,46 @@ It is developed in a **very specific** way to make the use of itself most comfor
 		Renderer::render('view/MyTemplate.phtml', array('title' => 'My First Application', 'body' => 'Hello, World!'));
     
 *  Go to your host in web-browser and enjoy =)
+
+## Database
+
+* Create a database. For this example I'll use MySQL database named 'test' with just one table 'logs': 
+		CREATE DATABASE test;
+		USE test;
+		CREATE TABLE logs (id INT PRIMARY KEY AUTO_INCREMENT, message TEXT NOT NULL);
+		INSERT INTO logs (message) VALUES ('The time has come for us'), ('To say our last goodbye`s'), ('And now it's finally the time'), ('To leave it all behind'), ('We Own the night'), ('As daylight dies'), ('We Own the night!');
+
+* _Thanks for lyrics to [DarkLyrics and Made Of Hate](http://www.darklyrics.com/lyrics/madeofhate/pathogen.html#5)_
+
+* Make these little changes to your `index` controller' code:
+
+		Config::set('dbLogQuery', TRUE);
+		$conn = Database::connect('mysql:host=YOUR DATABASE HOST;dbname=test', 'YOUR DATABASE USER', 'YOUR DATABASE PASSWORD');
+		$res = Database::query($conn, "select * from logs where message like :ow limit 10;", array(':ow' => '%ow%'));
+		Renderer::render('view/template.phtml', array('moo' => 'moo title', '_content' => '<h1>Hello, World!</h1>', 'rows' => $res));
+
+* Do not forget to replace `YOUR DATABASE HOST`, `YOUR DATABASE USER` and `YOUR DATABASE PASSWORD` options with the right values!
+
+* Create `app/YourApplication/view/dbgrid.phtml` file with these lines added:
+
+		<table>
+			<?php $first = TRUE; ?>
+			<?php foreach ($this->rows as $r): ?>
+				<tr>
+					<?php foreach ($r as $k => $c): ?>
+						<?php if (!$first): ?>
+							<td><?php echo $c; ?></td>
+						<?php else: ?>
+							<td><?php echo $k; ?></td>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</tr>
+				<?php if ($first) $first = FALSE; ?>
+			<?php endforeach; ?>
+		</table>
+
+* And add rendering li__m__e to your `app/YourApplication/view/template.phtml` file:
+
+		<?php Renderer::partial('view/dbgrid.phtml', array('rows' => $this->rows)) ?>
+
+* Go to your web-browser and verify the table with a few lyrics lines =)
