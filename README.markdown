@@ -41,6 +41,7 @@ It is developed in a **very specific** way to make the use of itself most comfor
 ## Database
 
 * Create a database. For this example I'll use MySQL database named 'test' with just one table 'logs': 
+
 		CREATE DATABASE test;
 		USE test;
 		CREATE TABLE logs (id INT PRIMARY KEY AUTO_INCREMENT, message TEXT NOT NULL);
