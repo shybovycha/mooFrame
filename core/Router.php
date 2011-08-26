@@ -1,6 +1,7 @@
 <?php
 require_once('Log.php');
 require_once('Application.php');
+require_once('Dispatcher.php');
 
 class Router
 {
@@ -29,38 +30,129 @@ class Router
 				$path = self::formatPath($appPath . '/');
 
 				$instance = new Application($app);
+				
+				$errorFlag = FALSE;
 
-				if (is_dir(self::formatPath($path . '/etc/')) && file_exists(self::formatPath($path . '/etc/routes.php')))
+				if (is_dir(self::formatPath($path . '/etc/')))
 				{
-					ob_start();
-					
-					include(self::formatPath($path . '/etc/routes.php'));
-
-					if (isset($routes))
-						$instance->setRoutes($routes);
-
-					unset($routes);
-
-					if (isset($isDefault) && $isDefault === TRUE)
+					if (file_exists(self::formatPath($path . '/etc/routes.php')))
 					{
-						$instance->setIsDefault(TRUE);
+						ob_start();
+						
+						include(self::formatPath($path . '/etc/routes.php'));
 
-						unset($isDefault);
+						if (isset($routes))
+							$instance->setRoutes($routes);
+
+						unset($routes);
+
+						if (isset($isDefault) && $isDefault === TRUE)
+						{
+							$instance->setIsDefault(TRUE);
+
+							unset($isDefault);
+						}
+						
+						$logMessage = ob_get_contents();
+						ob_end_clean();
 					}
 					
-					$logMessage = ob_get_contents();
-					ob_end_clean();
+					if (file_exists(self::formatPath($path . '/etc/config.php')))
+					{
+						ob_start();
+						
+						include(self::formatPath($path . '/etc/config.php'));
+						
+						if (isset($dependices))
+						{
+							foreach ($dependices as $v)
+							{
+								if (!Router::extensionExists($v))
+								{
+									Log::message("Could not load {$app} application due to unresolved dependency on {$v}.", "Please, verify that {$v} is installed to <mooFrame dir>/ext/ directory.");
+									
+									$errorFlag = TRUE;
+									
+									break;
+								}
+							}
+							
+							$instance->setDepends($dependices);
+						}
+
+						unset($dependices);
+
+						$logMessage = ob_get_contents();
+						ob_end_clean();
+					}
 				}
 
-				$__applicationList[$app] = $instance;
+				if (!$errorFlag)
+				{
+					$__applicationList[$app] = $instance;
+				}
 
 				unset($instance);
+
 			}
 		}
 
 		chdir($cwd);
 
 		return $__applicationList;
+	}
+	
+	public static function extensionExists($extName)
+	{
+		$cwd = getcwd();
+		chdir(dirname(__FILE__));
+		
+		if (!is_dir('../ext/'))
+		{
+			chdir($cwd);
+			
+			Log::message("Extension directory is not accessible.");
+			
+			return FALSE;
+		}
+		
+		chdir('../ext/');
+		
+		$pieces = array();
+		
+		if (preg_match('/(.+):(.+)/', $extName, $pieces))
+		{
+			if (!is_dir($pieces[1]))
+			{
+				chdir($cwd);
+				
+				return FALSE;
+			}
+			
+			// THIS CODE IS BAD!
+			// Extensions should be classes like Application!
+			$files = scandir($pieces[1]);
+			
+			foreach ($files as $v)
+			{
+				if (preg_match("/^{$pieces[2]}/i", $v))
+				{
+					chdir($cwd);
+					
+					return TRUE;
+				}
+			}
+		} else
+		{
+			if (is_dir($extName))
+			{
+				chdir($cwd);
+				
+				return TRUE;
+			}
+		}
+		
+		return FALSE;
 	}
 
 	public static function getApplicationList()
@@ -79,6 +171,104 @@ class Router
 		//$path = preg_replace('/\\//', '\\', $path);
 
 		return $path;
+	}
+	
+	private static function functionAlias($target, $original) 
+	{
+		eval("function $target() { \$args = func_get_args(); return call_user_func_array('$original', \$args); }");
+	}
+	
+	public static function applyRewrites($appName)
+	{
+		if (!isset($appName) || empty($appName))
+		{
+			Log::message("Could not apply rewrites because application name is empty.");
+			
+			return;
+		}
+		
+		$cwd = getcwd();
+		chdir(dirname(__FILE__));
+		
+		$rewritesFilename = '../app/' . $appName . '/etc/rewrites.php';
+		
+		if (!file_exists($rewritesFilename))
+		{
+			Log::message("{$rewritesFilename} file does not exist");
+			
+			chdir($cwd);
+			
+			return;
+		}
+		
+		ob_start();
+
+		include_once($rewritesFilename);
+
+		ob_end_clean();
+		
+		if (!isset($rewrites))
+		{
+			return;
+		}
+		
+		$classRewriteRegex = '/class:(\w+)/i';
+		$methodRewriteRegex = '/method:(\w+)/i';
+		$funcRewriteRegex = '/function:(\w+)/i';
+		
+		foreach ($rewrites as $k => $v)
+		{
+			if (preg_match($classRewriteRegex, $k))
+			{
+				$classname = preg_replace($classRewriteRegex, '$1', $k);
+				
+				//if (!class_exists($classname))
+				{
+					Log::message("Could not apply rewrite \"{$k} => {$v}\" because class {$classname} does not exist.");
+					
+					continue;
+				}
+				
+				class_alias($classname, $v);
+			} else
+			if (preg_match($methodRewriteRegex, $k))
+			{
+				$methname = preg_replace($methodRewriteRegex, '$1', $k);
+				
+				$pieces = array();
+				preg_split('/(\w+)::(\w+)/', $methname, $pieces);
+				
+				if (count($pieces) < 3)
+					continue;
+					
+				$classname = $pieces[1];
+				$funcname = $pieces[2];
+				
+				if (!method_exists(array($classname, $funcname)))
+				{
+					Log::message("Could not apply rewrite \"{$k} => {$v}\" because method {$classname} :: {$funcname} does not exist.");
+					
+					continue;
+				}
+					
+				self::functionAlias($methname, $v);
+			} else
+			if (preg_match($funcRewriteRegex, $k))
+			{
+				$funcname = preg_replace($funcRewriteRegex, '$1', $k);
+				
+				if (!is_callable($funcname))
+				{
+					Log::message("Could not apply rewrite \"{$k} => {$v}\" because function {$funcname} does not exist.", "I'll try to create that function for you anyway.");
+					
+					//continue;
+				}
+					
+				self::functionAlias($funcname, $v);
+			}
+		}
+		
+		chdir($cwd);
 	}
 
 	public static function route($url = NULL)
@@ -156,11 +346,18 @@ class Router
 				$routingParams['action'] = $pieces[3];
 		}
 		
+		// action arguments
 		if (count($pieces) > 4)
 		{
 			$routingParams['params'] = array_splice($pieces, 4, count($pieces) - 4);
 			self::$__applicationParams = $routingParams['params'];
 		}
+		
+		// apply rewrites
+		/*if (isset($routingParams['application']))
+		{
+			self::applyRewrites($routingParams['application']);
+		}*/
 		
 		$appList = self::getApplicationList();
 		$routeMatchingApps = array();
@@ -169,6 +366,9 @@ class Router
 		{
 			if ($app->matchUrl($url) || $app->matchRoutingParams($routingParams))
 			{
+				// Review rewrites functionality
+				// self::applyRewrites($app->getName());
+				
 				$routeMatchingApps[] = $app;
 				$app->dispatch($routingParams);
 			}
@@ -327,5 +527,82 @@ class Router
 		}
 		
 		return Router::formatPath('/index.php', $result);
+	}
+	
+	public static function ext($extPath)
+	{
+		// extPath format:
+		//   <extenstion file path>:<function name>
+		// examples:
+		//   'Authorizator/Authorizator.php:findUser'
+		//   'FileUploader/Uploader.php:upload' INSTEAD OF 'FileUploader/Uploader.php:Uploader::upload'
+		
+		$pieces = array();
+		
+		if (!preg_match('/(.*[^:]{1}):([^:]{1}.*)/', $extPath, $pieces) || count($pieces) != 3)
+		{
+			Log::message("Could not understand extension path format.", "Please, verify that", $extPath, "matches format", "<extenstion file path>:<function name>", "", "For example, you should use 'FileUploader/Uploader.php:upload' INSTEAD OF 'FileUploader/Uploader.php:Uploader::upload'");
+			
+			return NULL;
+		}
+		
+		$filename = '../ext/' . $pieces[1];
+		$funcName = $pieces[2];
+		$className = preg_replace('/.+\/(\w+)(\..*)$/', '$1', $pieces[1]);
+		$args = array_slice(func_get_args(), 1);
+		
+		$cwd = getcwd();
+		chdir(dirname(__FILE__));
+		
+		if (!file_exists($filename))
+		{
+			chdir($cwd);
+			
+			Log::message("Could not find {$filename} file - extension could not be envoked.");
+			
+			return NULL;
+		}
+		
+		$res = NULL;
+		
+		ob_start();
+
+		try
+		{
+			include_once($filename);
+			
+			if (function_exists($funcName))
+			{
+				if (Config::get('extLogCalls'))
+					Log::message("Calling {$funcName} function with", $args);
+				
+				$res = call_user_func_array($funcName, $args);
+			} else
+			if (class_exists($className, FALSE) && is_callable($className . '::' . $funcName))
+			{
+				if (Config::get('extLogCalls'))
+					Log::message("Calling {$className} :: {$funcName} function with", $args);
+				
+				$res = call_user_func_array($className . '::' . $funcName, $args);
+			} else
+			{
+				Log::message("Could not invoke extension because not function nor class method matching {$extPath} not found.");
+			}
+		} catch (Exception $e)
+		{
+			Log::message("Extension invoke failed with exception:", $e);
+			
+			ob_end_clean();
+		
+			chdir($cwd);
+			
+			return NULL;
+		}
+		
+		ob_end_clean();
+		
+		chdir($cwd);
+		
+		return $res;
 	}
 }
