@@ -1,5 +1,5 @@
 <?php
-	Dispatcher::subscribe('moo', 'foo');
+	Dispatcher::subscribe('hop', 'ext:MooExtension/Hop.php:compareArgs');
 	
 	Config::set('dbLogQuery', TRUE);
 	$conn = Database::connect('mysql:host=localhost;dbname=chess', 'root', 'abcABC123');
@@ -8,6 +8,9 @@
 	$ext1Res = Router::ext('MooExtension/Mooer.php:moo', 'Joe', 'Hustav', 'Mark');
 	$ext2Res = Router::ext('MooExtension/Hop.php:hop', 'brbrbr');
 	$extSummary = Router::ext('MooExtension/Hop.php:quote', $ext1Res, $ext2Res);
+	
+	Log::message("Hop event firing #1:", Dispatcher::fire('hop', 'a', 'a', 1, '1', '0', FALSE, 0, NULL, 0, FALSE));
+	Log::message("Hop event firing #2:", Dispatcher::fire('hop', 'a', 'a', 1, '1', '0', FALSE, 0, FALSE));
 	
 	Renderer::render('view/template.phtml', array(
 		'moo' => 'moo title', 

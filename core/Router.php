@@ -8,7 +8,7 @@ class Router
 	private static $__applicationList = NULL;
 	private static $__applicationParams = NULL;
 
-	public static function getAppList()
+	private static function getAppList()
 	{
 		$cwd = getcwd();
 		chdir(dirname(__FILE__));
