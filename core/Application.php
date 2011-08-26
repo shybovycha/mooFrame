@@ -55,12 +55,21 @@
 
 		function getControllers()
 		{
+			$cwd = getcwd();
+			chdir(dirname(__FILE__));
+				
 			if (!isset($this->__data['controllers']))
 			{
 				$path = '../app/' . $this->__data['name'] . '/controller/';
 
 				if (!file_exists($path) || !is_dir($path))
+				{
+					Log::message("Application {$this->__data['name']} contains no controllers.", "Are you sure this is not a mooFrame bug?");
+					
+					chdir($cwd);
+					
 					return NULL;
+				}
 
 				$controllers = scandir($path);
 				$regex = '/^(\w+)\.(php)$/';
@@ -81,6 +90,8 @@
 
 				$this->__data['controllers'] = $controllers;
 			}
+			
+			chdir($cwd);
 
 			return $this->__data['controllers'];
 		}

@@ -450,6 +450,11 @@ class Router
 	 
 	public static function getUrl($object)
 	{
+		if (strtolower($object) == 'referer')
+		{
+			return $_SERVER['HTTP_REFERER'];
+		}
+		
 		$appRegex = '/^app:(.+)$/';
 		$fileRegex = '/^file:(.+)$/';
 		
@@ -476,6 +481,8 @@ class Router
 
 			$app = $appList[$pieces[0]];
 			$controllers = $app->getControllers();
+			
+			Log::message("{$app->getName()} Controllers", Log::dump($controllers));
 
 			if (isset($pieces[1]) && isset($controllers[$pieces[1]]))
 			{

@@ -10,14 +10,7 @@
 
 			ob_start();
 
-			if (count($args) > 1)
-			{
-				var_dump($args);
-			} else
-			if (count($args) == 1)
-			{
-				var_dump($args);
-			}
+			var_dump($args);
 
 			$res = trim(ob_get_contents());
 			ob_end_clean();

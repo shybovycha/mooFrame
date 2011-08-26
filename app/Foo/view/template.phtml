@@ -6,6 +6,12 @@
 <body>
 	<?php echo $this->_content; ?>
 	<img src="<?php echo Router::getUrl('file:image1.jpg'); ?>" alt="picture here" /><br /><br />
-	<a href="<?php echo Router::getUrl('app:Foo'); ?>">Link example #1</a><br /><br />
+	
+	<?php if (!$this->url): ?>
+		<a href="<?php echo Router::getUrl('app:Foo/other'); ?>">Link example #1</a><br /><br />
+	<?php else: ?>
+		<a href="<?php echo $this->url; ?>">Link example #2</a><br /><br />
+	<?php endif; ?>
+	
 	<?php Renderer::partial('view/dbgrid.phtml', array('rows' => $this->rows)) ?>
 </body>
