@@ -81,3 +81,74 @@ It is developed in a **very specific** way to make the use of itself most comfor
 		<?php Renderer::partial('view/dbgrid.phtml', array('rows' => $this->rows)) ?>
 
 * Go to your web-browser and verify the table with a few lyrics lines =)
+
+## Extensions
+
+* Create extension folder `ext/YourExtension/` with the files you will need. Let's create just one, `MyHelper.php`
+
+* Make your application depend on your new extension file: create file `app/YourApplication/etc/config.php` with this code:
+
+		<?php
+			$depends = array(
+				'MyExtension:MyHelper'
+			);
+		?>
+
+* Add some helper functions to `ext/YourExtension/MyHelper.php`:
+
+		<?php
+			function quote($text)
+			{
+				return "<p><i>$text</i></p><br />";
+			}
+		?>
+
+* Invoke your extension, for example, in `app/YourApplication/view/template.phtml`:
+
+		<?php echo Router::ext('MyExtension/MyHelper.php:quote', 'Lorem ipsum... Blah-blah-blah... That makes no sense!'); ?>
+		
+* If you wanna use classes, you should name the file and the class within that file with the same name. Let's create `Mooer.php` file within `ext/MyExtension/`:
+
+		<?php
+			class Mooer
+			{
+				static function moo()
+				{
+					$args = func_get_args();
+					
+					$r = '';
+					
+					foreach ($args as $v)
+					{
+						$r .= "<i>Moo~, $v, moo~!</i><br />';
+					}
+					
+					return $r;
+				}
+			}
+		?>
+
+ 	When you make a call to such extension, you should pass just function name: 
+ 			
+ 			Router::ext('MyExtension/Mooer.php:moo', 'Joe', 'Daniel', 'Mary')
+ 			
+ 	Again, __you should not use complete function name like *class::function* when invoking an extension__!
+ 	Sure, you _may_, but you __should not__.
+ 	
+## Events
+
+If you need to communicate between different parts of your application (for example, controller and extension routines), you may use a `Dispatcher` class.
+To pass execution to some function chain, you need two things:
+
+- Register some function set to handle certain event: 
+	
+		Dispatcher::subscribe('MooEventSignal', 'app:MooApplication/controller/index.php:someFunction');
+	
+	Currently, application and extension handlers are supported only. Handler string format is (PCRE used): 
+		
+		(app|ext):(file path relative to app/ or ext/ dir)(:function name)?
+
+	If you have not passed function name, the whole file would be executed (like controllers, don't you remember? 'use classes only if you need them. if not - use raw PHP files!').
+                                                                                                                                                                                                                                                                                                                             - 
+- Fire that event: `Dispatcher::fire('MooEventSignal');`. All handlers will be invoked in the same order as they were subscribed.
+#
