@@ -19,8 +19,7 @@
 			//   ext:FileUploader/upload.php:uploadFileTo
 			
 			$cwd = getcwd();
-			chdir(dirname(__FILE__));
-			chdir('../');
+			chdir(Config::get('basedir'));
 			
 			$pieces = preg_split('/\b:\b/', $handle);
 			
@@ -84,8 +83,7 @@
 			}
 			
 			$cwd = getcwd();
-			chdir(dirname(__FILE__));
-			chdir('../');
+			chdir(Config::get('basedir'));
 			
 			$args = array_slice(func_get_args(), 1);
 			$res = TRUE;

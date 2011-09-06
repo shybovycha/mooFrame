@@ -20,10 +20,7 @@
 
 		public static function message($message)
 		{
-			$cwd = getcwd();
-			chdir(dirname(__FILE__));
-
-			$logFilename = '../log/frame.log';
+			$logFilename = Config::get('logfile');
 			$args = func_get_args();
 			$f = NULL;
 
@@ -53,16 +50,11 @@
 			fprintf($f, "\n");
 
 			fclose($f);
-
-			chdir($cwd);
 		}
 
 		public static function trace()
 		{
-			$cwd = getcwd();
-			chdir(dirname(__FILE__));
-
-			$logFilename = '../log/frame.log';
+			$logFilename = Config::get('logfile');
 			$args = func_get_args();
 			$f = NULL;
 
@@ -107,7 +99,5 @@
 			fprintf($f, "\n");
 
 			fclose($f);
-
-			chdir($cwd);
 		}
 	}

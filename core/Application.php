@@ -56,11 +56,11 @@
 		function getControllers()
 		{
 			$cwd = getcwd();
-			chdir(dirname(__FILE__));
+			chdir(Config::get('basedir'));
 				
-			if (!isset($this->__data['controllers']))
+			if (!isset($this->__data['controllers']) || empty($this->__data['controllers']))
 			{
-				$path = '../app/' . $this->__data['name'] . '/controller/';
+				$path = Router::formatPath('app', $this->__data['name'], 'controller');
 
 				if (!file_exists($path) || !is_dir($path))
 				{
@@ -77,7 +77,7 @@
 				// Remove '.', '..' and non-controller-file entries
 				foreach ($controllers as $k => $v)
 				{
-					if (!file_exists($path . $v) || !preg_match($regex, $v))
+					if (!file_exists(Router::formatPath($path, $v)) || !preg_match($regex, $v))
 					{
 						unset($controllers[$k]);
 					} else
@@ -100,6 +100,8 @@
 		{
 			if (!isset($controller))
 			{
+				Log::message("Could not find empty-named controller in {$this->__data['name']} application");
+
 				return NULL;
 			}
 
@@ -107,16 +109,22 @@
 
 			if (!isset($controllerList[$controller]))
 			{
+				Log::message("Could not find {$controller} controller in {$this->__data['name']} application controller list: ", $controllerList);
+
 				return NULL;
 			}
 
-			$controllerFileName = '../app/' . $this->__data['name'] . '/controller/' . $controllerList[$controller] . '.php';
+			$controllerFileName = Router::formatPath(Config::get('basedir'), 'app', $this->__data['name'], 'controller', $controllerList[$controller] . '.php');
 
 			if (!file_exists($controllerFileName))
+			{
+				Log::message("Could not load {$controllerFileName} file - it just does not exist!");
+
 				return NULL;
+			}
 
 			$cwd = getcwd();
-			chdir('../app/' . $this->__data['name'] . '/');
+			chdir(Router::formatPath(Config::get('basedir'), 'app', $this->__data['name']));
 
 			ob_start();
 			include('controller/' . $controllerList[$controller] . '.php');
@@ -139,6 +147,19 @@
 
 		function dispatch($routingParams)
 		{
+			/*if (isset($routingParams['application']) && $routingParams['application'] != $this->__data['name'])
+			{
+				Log::message("Could not continue routing: matching route failed");
+				return FALSE;
+			}*/
+
+			if (isset($routingParams['url']))
+			{
+				$routes = $this->getMatchingRoutes($routingParams['url']);
+
+				$routingParams = $routes[0];
+			}
+			
 			if (!isset($routingParams['controller']) || empty($routingParams['controller']))
 			{
 				$routingParams['controller'] = 'index';
@@ -176,7 +197,7 @@
 				$routingParams['params'] = array();
 
 			$cwd = getcwd();
-			chdir('../app/' . $this->__data['name'] . '/');
+			chdir(Router::formatPath(Config::get('basedir'), 'app', $this->__data['name']));
 
 			call_user_func_array(array($controller, $routingParams['action']), $routingParams['params']);
 
@@ -188,7 +209,7 @@
 			if (isset($this->__data['routes']) && isset($this->__data['routes']['root']) && isset($this->__data['routes']['root']['controller']))
 			{
 				$controllerName = $this->__data['routes']['root']['controller'];
-				$path = '../app/' . $this->__data['name'] . '/controller/' . $controllerName . '.php';
+				$path = Router::formatPath(Config::get('basedir'), 'app', $this->__data['name'], 'controller', $controllerName . '.php');
 
 				if (file_exists($path))
 				{
@@ -204,7 +225,7 @@
 			return NULL;
 		}
 
-		function matchUrl($url)
+		private function getMatchingRoutes($url)
 		{
 			if (!isset($url))
 				return NULL;
@@ -223,14 +244,28 @@
 						}
 					}
 
-					$r['match'] = '/' . str_replace("/", "\/", $r['match']) . '/';
+					$r['match'] = '/^' . str_replace("/", "\/", $r['match']) . '$/';
 
-					if (preg_match($r['match'], $url))
+					$matchResult = preg_match($r['match'], $url);
+
+					if ($matchResult == TRUE)
 						$res[] = $r;
+
+					//Log::message('Trying to match these:', $this->__data['name'], $r, Log::dump($url), $matchResult);
 				}
 			}
 
 			return $res;
+		}
+
+		function matchUrl($url)
+		{
+			if (!isset($url))
+				return NULL;
+
+			$routes = $this->getMatchingRoutes($url);
+
+			return (is_array($routes) && count($routes) > 0);
 		}
 
 		function matchRoutingParams($routingParams)

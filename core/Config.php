@@ -44,4 +44,5 @@
 		}
 	}
 
-	Config::set('basedir', dirname(__FILE__));
+	Config::set('basedir', dirname(dirname(__FILE__)));
+	Config::set('logfile', Config::get('basedir') . '/log/frame.log');
