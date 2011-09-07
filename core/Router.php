@@ -439,6 +439,16 @@ class Router
 				return FALSE;
 			}
 
+			// force content caching to minify server loading
+			if (!isset($_SERVER['If-Modified-Since']) || (isset($_SERVER['If-Modified-Since']) && strtotime($_SERVER['If-Modified-Since']) <= filemtime($file)))
+			{
+				// 14 days to expire cache
+				$cacheExpireTime = 60 * 60 * 24 * 14;
+				header('Pragma: public');
+				header('Cache-Control: max-age=' . $cacheExpireTime);
+				header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $cacheExpireTime) . ' GMT');
+			}
+			
 			header('Content-Type: ' . $mimeType);
 
 			echo stream_get_contents($f);
@@ -691,17 +701,15 @@ class Router
 				if (isset($result))
 					break;
 
-				// cwd points to current application's directory
-				$files = scandir($dir);
+				$cwd = getcwd();
+				chdir($dir);
 
-				foreach ($files as $f)
+				if (file_exists(Router::formatPath($dir, $pieces[1])))
 				{
-					if (file_exists(Router::formatPath($dir, $f)) && $f == $pieces[1])
-					{
-						$result = $f;
-						break;
-					}
+					$result = $pieces[1];
 				}
+
+				chdir($cwd);
 			}
 		}
 
