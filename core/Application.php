@@ -142,6 +142,7 @@
 			}
 
 			$controller = new $controllerList[$controller];
+
 			return $controller;
 		}
 
@@ -166,11 +167,17 @@
 				$controller = $this->getController('index');
 
 				if (!isset($controller))
+				{
+					Log::message("No controller given:", $routingParams);
+
 					return FALSE;
+				}
 			}
 
 			if (!isset($controller))
 				$controller = $this->getController($routingParams['controller']);
+
+			//Log::message("Available controller:", $controller);
 
 			$controllerClassName = get_class($controller);
 
@@ -178,6 +185,8 @@
 			{
 				if ($controllerClassName != 'AbstractController')
 				{
+					Log::message("{$controllerClassName} is not a controller instance.");
+
 					return FALSE;
 				} else
 				{
@@ -191,7 +200,11 @@
 				$routingParams['action'] = 'index';
 
 			if (!isset($controller) || (isset($routingParams['action']) && !method_exists($controller, $routingParams['action'])))
+			{
+				Log::message("Could not find any applicable routine for routing", $routingParams, $controller);
+
 				return FALSE;
+			}
 
 			if (!isset($routingParams['params']))
 				$routingParams['params'] = array();

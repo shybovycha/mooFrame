@@ -50,7 +50,7 @@
 				{
 					foreach ($bindings as $k => $v)
 					{
-						$query->bindParam($k, $v);
+						$query->bindValue($k, $v);
 					}
 				}
 			} catch (Exception $e)
@@ -64,7 +64,7 @@
 			{
 				if (Config::get('dbLogQuery'))
 				{
-					Log::message("Trying to execute query:", $query);
+					Log::message("Trying to execute query:", $query, 'Bindings are:', $bindings);
 				}
 
 				$query->execute();

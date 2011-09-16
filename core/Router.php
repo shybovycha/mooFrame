@@ -297,7 +297,7 @@ class Router
             case "jpg" :
             case "jpeg" :
             case "jpe" :
-                return "image/jpg";
+                return "image/jpeg";
 
             case "png" :
             case "gif" :
@@ -386,6 +386,28 @@ class Router
         }
     }
 
+	protected static function fileExists($url)
+	{
+		$cwd = getcwd();
+		chdir(Config::get('basedir'));
+
+		$mediaPathList = Config::get('mediadirs');
+
+		Log::message("Seeking for {$url} matches within", $mediaPathList);
+
+		foreach ($mediaPathList as $path)
+		{
+			if (file_exists(self::formatPath($path, $url)))
+			{
+				chdir($cwd);
+				return $path;
+			}
+		}
+
+		chdir($cwd);
+		return NULL;
+	}
+
 	public static function route($url = NULL)
 	{
 		session_start();
@@ -402,13 +424,26 @@ class Router
 		
 		$url = str_replace($_SERVER['SCRIPT_NAME'], '', $url);
 
-		$mediaPath = Router::formatPath(Config::get('basedir'), 'media');
-
-		if (preg_match('/.+\..+$/', $url) && file_exists(self::formatPath($mediaPath . $url)))
+		if (preg_match('/.+\..+$/', $url) && !preg_match('/.*?.*=.+\..+$/', $url))
 		{
+			Log::message("Seems that {$url} is a file URL request... Trying to find that file...");
+
+			$mediaPath = Router::fileExists($url);
+
+			if (!isset($mediaPath))
+			{
+				Log::message("Nope, that file does not exist...");
+
+				return FALSE;
+			}
+			
+			chdir(Config::get('basedir'));
+
 			$file = self::formatPath($mediaPath, $url);
 
-			$mimeType = Router::getMIMEType($file);;
+			$mimeType = Router::getMIMEType($file);
+
+			Log::message("Found file at", $file, "File type:", $mimeType);
 
 			/*if (function_exists('Router::getMIMEType'))
 			{
@@ -430,7 +465,7 @@ class Router
 			{
 				$mimeType = 'application/force-download';
 			}*/
-			
+
 			$f = fopen($file, 'r');
 
 			if (headers_sent())
@@ -448,7 +483,7 @@ class Router
 				header('Cache-Control: max-age=' . $cacheExpireTime);
 				header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $cacheExpireTime) . ' GMT');
 			}
-			
+
 			header('Content-Type: ' . $mimeType);
 
 			echo stream_get_contents($f);
@@ -458,6 +493,7 @@ class Router
 			return TRUE;
 		}
 
+		$url = preg_replace('/\?.*/', '', $url);
 		$pieces = preg_split('/\//', $url);
 		$routingParams = array();
 
@@ -499,7 +535,7 @@ class Router
 			$routingParams['params'] = array_splice($pieces, 4, count($pieces) - 4);
 			self::$__applicationParams = $routingParams['params'];
 		}
-		
+
 		// apply rewrites
 		/*if (isset($routingParams['application']))
 		{
@@ -508,6 +544,8 @@ class Router
 		
 		$appList = self::getApplicationList();
 		$routeMatchingApps = array();
+
+		//Log::message("Trying to route: ", $routingParams, "Available applications:", $appList);
 
 		foreach ($appList as $app)
 		{
@@ -530,7 +568,11 @@ class Router
 		}
 
 		if (!empty($routeMatchingApps))
+		{
+			//Log::message("Matches found:", $routeMatchingApps);
+			
 			return;
+		}
 
 		Log::message("No application matches found.", $url, $routingParams, "Trying to invoke first default application...");
 
@@ -547,45 +589,27 @@ class Router
 		}
 	}
 
-	protected static function getArrayValues($arr)
+	protected static function getArrayValues($where, $what)
 	{
-		if (!isset($arr) || !is_array($arr))
+		if (!isset($where) || !is_array($where) || !isset($what) || !is_array($what) || count($where) <= 0)
 			return NULL;
 
-		$args = func_get_args();
-		$args = array_slice($args, 1, count($args));
+		$res = array();
 
-		foreach ($args as $k => $v)
+		foreach ($what as $v)
 		{
-			if (is_array($v))
+			if (array_key_exists($v, $where))
 			{
-				unset($args[$k]);
-				$args = array_merge($args, $v);
+				if (isset($where[$v]))
+					$res[$v] = $where[$v]; else
+						$res[v] = TRUE;
+			} else
+			{
+				$res[$v] = NULL;
 			}
 		}
 
-		if (isset($args) && is_array($args) && count($args) > 0)
-		{
-			$res = array();
-
-			foreach ($args as $v)
-			{
-				if (array_key_exists($v, $arr))
-				{
-					if (isset($arr[$v]))
-						$res[$v] = $arr[$v]; else
-							$res[v] = TRUE;
-				} else
-				{
-					$res[v] = NULL;
-				}
-			}
-
-			return $res;
-		} else
-		{
-			return $arr;
-		}
+		return $res;
 	}
 
 	public static function getUrlParams()
