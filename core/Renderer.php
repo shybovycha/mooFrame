@@ -64,6 +64,6 @@
 		public static function partial($file, $args = NULL)
 		{
 			$r = self::getRenderer();
-			echo $r->partial($file, $args);
+			return $r->partial($file, $args);
 		}
 	}

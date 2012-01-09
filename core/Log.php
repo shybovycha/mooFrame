@@ -10,14 +10,7 @@
 
 			ob_start();
 
-			if (count($args) > 1)
-			{
-				var_dump($args);
-			} else
-			if (count($args) == 1)
-			{
-				var_dump($args);
-			}
+			var_dump($args);
 
 			$res = trim(ob_get_contents());
 			ob_end_clean();
@@ -27,10 +20,7 @@
 
 		public static function message($message)
 		{
-			$cwd = getcwd();
-			chdir(dirname(__FILE__));
-
-			$logFilename = '../log/frame.log';
+			$logFilename = Config::get('logfile');
 			$args = func_get_args();
 			$f = NULL;
 
@@ -60,16 +50,11 @@
 			fprintf($f, "\n");
 
 			fclose($f);
-
-			chdir($cwd);
 		}
 
 		public static function trace()
 		{
-			$cwd = getcwd();
-			chdir(dirname(__FILE__));
-
-			$logFilename = '../log/frame.log';
+			$logFilename = Config::get('logfile');
 			$args = func_get_args();
 			$f = NULL;
 
@@ -114,7 +99,5 @@
 			fprintf($f, "\n");
 
 			fclose($f);
-
-			chdir($cwd);
 		}
 	}
