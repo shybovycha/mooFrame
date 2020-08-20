@@ -1,6 +1,6 @@
 #  mooFrame [0.1.0]
 
-![logo](http://github.com/shybovycha/mooFrame/raw/alpha/logo.png)
+![logo](https://raw.githubusercontent.com/shybovycha/mooFrame/master/logo.png)
 
 _mooFrame_ is a PHP framework, supposed to be a very lightweight and simple. 
 
